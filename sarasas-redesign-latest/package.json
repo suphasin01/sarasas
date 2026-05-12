@@ -1,0 +1,10 @@
+{
+  "name": "sarasas-school-website",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "rm -rf dist && mkdir -p dist && cp index.html styles.css script.js vercel.json README.md dist/ && cp -R assets dist/assets",
+    "dev": "python3 -m http.server 4173",
+    "start": "python3 -m http.server 4173"
+  }
+}
