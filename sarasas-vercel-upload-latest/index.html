@@ -6,6 +6,14 @@
   <title>โรงเรียนสารสาสน์วิเทศบางบัวทอง</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+<!-- ปุ่มความเป็นมา -->
+<dialog class="history-image-dialog" id="historyImageDialog">
+  <button class="close-image" type="button">×</button>
+
+  <img src="assets/history.jpg"
+       alt="ประวัติโรงเรียนสารสาสน์วิเทศบางบัวทอง">
+</dialog>
+<!-- ปุ่มความเป็นมา -->
 <body>
   <header class="topbar">
     <a class="brand" href="#home" aria-label="Sarasas Witaed Bangbuathong School home">
@@ -38,11 +46,11 @@
     <aside class="sidebar" aria-label="School information">
       <section class="sidebar-group">
         <h2 data-th="ข้อมูลโรงเรียน" data-en="School Profile">ข้อมูลโรงเรียน</h2>
-        <a href="#history" data-th="ความเป็นมา" data-en="History">ความเป็นมา</a>
-        <a href="#identity" data-th="อัตลักษณ์" data-en="Identity">อัตลักษณ์</a>
-        <a href="#symbol" data-th="ตราสัญลักษณ์" data-en="School Emblem">ตราสัญลักษณ์</a>
-        <a href="#song" data-th="เพลงประจำโรงเรียน" data-en="School Song">เพลงประจำโรงเรียน</a>
-        <a href="#admission" data-th="ADMISSION" data-en="ADMISSION">ADMISSION</a>
+        <a href="#history" class="history-link" data-th="ความเป็นมา" data-en="History">ความเป็นมา</a>
+        <a href="#identity" class="identity-link" data-th="อัตลักษณ์" data-en="Identity">อัตลักษณ์</a>
+        <a href="#symbol" class="symbol-link" data-th="ตราสัญลักษณ์" data-en="School Emblem">ตราสัญลักษณ์</a>
+        <a href="#song" class="song-link" data-th="เพลงประจำโรงเรียน" data-en="School Song">เพลงประจำโรงเรียน</a>
+        <a href="#admission" class="admission-link" data-th="ADMISSION" data-en="ADMISSION">ADMISSION</a>
       </section>
 
       <section class="sidebar-group">
@@ -69,20 +77,9 @@
         </div>
       </section>
 
-      <section class="quick-strip" aria-label="School statistics">
-        <article>
-          <strong>2,480</strong>
-          <span data-th="นักเรียน" data-en="Students">นักเรียน</span>
-        </article>
-        <article>
-          <strong>186</strong>
-          <span data-th="ครูและบุคลากร" data-en="Teachers and staff">ครูและบุคลากร</span>
-        </article>
-        <article>
-          <strong>3</strong>
-          <span data-th="หลักสูตรสองภาษา" data-en="Bilingual programmes">หลักสูตรสองภาษา</span>
-        </article>
-      </section>
+      
+
+      
 
       <section class="feature-grid" aria-label="Main content">
         <article class="slideshow panel">
@@ -155,21 +152,6 @@
         </section>
       </section>
 
-      <section class="programme-band" aria-label="Programmes">
-        <article id="bilingual">
-          <h2>Bilingual Programme</h2>
-          <p data-th="ภาษาอังกฤษเข้มข้น ควบคู่พื้นฐานวิชาการไทย" data-en="Strong English learning alongside Thai academic foundations.">ภาษาอังกฤษเข้มข้น ควบคู่พื้นฐานวิชาการไทย</p>
-        </article>
-        <article id="asean">
-          <h2>ASEAN Bilingual</h2>
-          <p data-th="เสริมทักษะสื่อสารและความเข้าใจวัฒนธรรมอาเซียน" data-en="Communication skills with ASEAN cultural awareness.">เสริมทักษะสื่อสารและความเข้าใจวัฒนธรรมอาเซียน</p>
-        </article>
-        <article id="mini">
-          <h2>Mini Bilingual</h2>
-          <p data-th="เริ่มต้นสองภาษาอย่างมั่นใจสำหรับเด็กเล็ก" data-en="A confident bilingual start for younger learners.">เริ่มต้นสองภาษาอย่างมั่นใจสำหรับเด็กเล็ก</p>
-        </article>
-      </section>
-
       <section id="student-portal" class="portal panel" aria-labelledby="portal-title">
         <div>
           <p class="eyebrow" data-th="Student Portal" data-en="Student Portal">Student Portal</p>
@@ -187,6 +169,37 @@
           <p data-th="ผลการค้นหาจะแสดงที่นี่" data-en="Search results will appear here.">ผลการค้นหาจะแสดงที่นี่</p>
         </div>
       </section>
+
+      <section class="programme-band" aria-label="Programmes">
+        <article id="bilingual">
+          <h2>Bilingual Programme</h2>
+          <p data-th="ภาษาอังกฤษเข้มข้น ควบคู่พื้นฐานวิชาการไทย" data-en="Strong English learning alongside Thai academic foundations.">ภาษาอังกฤษเข้มข้น ควบคู่พื้นฐานวิชาการไทย</p>
+        </article>
+        <article id="asean">
+          <h2>ASEAN Bilingual</h2>
+          <p data-th="เสริมทักษะสื่อสารและความเข้าใจวัฒนธรรมอาเซียน" data-en="Communication skills with ASEAN cultural awareness.">เสริมทักษะสื่อสารและความเข้าใจวัฒนธรรมอาเซียน</p>
+        </article>
+        <article id="mini">
+          <h2>Mini Bilingual</h2>
+          <p data-th="เริ่มต้นสองภาษาอย่างมั่นใจสำหรับเด็กเล็ก" data-en="A confident bilingual start for younger learners.">เริ่มต้นสองภาษาอย่างมั่นใจสำหรับเด็กเล็ก</p>
+        </article>
+      </section>
+
+      <section class="quick-strip" aria-label="School statistics">
+        <article>
+          <strong>2,480</strong>
+          <span data-th="นักเรียน" data-en="Students">นักเรียน</span>
+        </article>
+        <article>
+          <strong>186</strong>
+          <span data-th="ครูและบุคลากร" data-en="Teachers and staff">ครูและบุคลากร</span>
+        </article>
+        <article>
+          <strong>3</strong>
+          <span data-th="หลักสูตรสองภาษา" data-en="Bilingual programmes">หลักสูตรสองภาษา</span>
+        </article>
+      </section>
+      
     </section>
   </main>
 

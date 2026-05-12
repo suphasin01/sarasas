@@ -184,3 +184,31 @@ loginForm.addEventListener("submit", (event) => {
 setInterval(() => {
   showSlide((activeSlide + 1) % slides.length);
 }, 6500);
+
+//ปุ่มความเป็นมา
+const historyLink = document.querySelector('.history-link');
+const historyImageDialog = document.getElementById('historyImageDialog');
+const closeImage = document.querySelector('.close-image');
+
+historyLink.addEventListener('click', (e) => {
+  e.preventDefault(); // กันไม่ให้เลื่อนไป #history
+  historyImageDialog.showModal();
+});
+
+closeImage.addEventListener('click', () => {
+  historyImageDialog.close();
+});
+
+historyImageDialog.addEventListener('click', (e) => {
+  const rect = historyImageDialog.getBoundingClientRect();
+
+  const isInside =
+    rect.top <= e.clientY &&
+    e.clientY <= rect.top + rect.height &&
+    rect.left <= e.clientX &&
+    e.clientX <= rect.left + rect.width;
+
+  if (!isInside) {
+    historyImageDialog.close();
+  }
+});

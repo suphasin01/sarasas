@@ -314,19 +314,23 @@ a {
 .eyebrow {
   margin: 0 0 10px;
   color: #ffccd5;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: .12em;
+  font-size: 10 px;
+  font-weight: 500  ;
+  letter-spacing: .10em;
   text-transform: uppercase;
 }
 
 .hero h1 {
   margin: 0;
   max-width: 680px;
-  font-size: clamp(32px, 5vw, 56px);
-  line-height: 1.05;
-  letter-spacing: 0;
+  font-size: clamp(50px, 5vw, 32px);
+  line-height: 1.2 ;
+  letter-spacing: .02em;
+  font-weight: 50;
 }
+
+
+
 
 .hero p {
   max-width: 600px;
@@ -1397,4 +1401,38 @@ body.is-teacher .teacher-shell {
     height: 48px;
     font-size: 20px;
   }
+}
+
+ /* ปุ่มความเป็นมา */
+
+ .history-image-dialog {
+  border: none;
+  padding: 0;
+  background: transparent;
+  max-width: 90%;
+}
+
+.history-image-dialog::backdrop {
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(4px);
+}
+
+.history-image-dialog img {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 20px;
+  display: block;
+}
+
+.close-image {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: white;
+  font-size: 24px;
+  cursor: pointer;
 }
