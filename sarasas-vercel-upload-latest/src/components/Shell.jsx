@@ -111,7 +111,7 @@ export default function Shell({ roleInfo, onLogout, sidebar, children }) {
         {/* Sidebar */}
         <aside
           className={`
-            fixed md:sticky top-[72px] left-0 z-30
+            fixed top-[72px] md:sticky md:top-0 left-0 z-30
             h-[calc(100vh-72px)] flex flex-col shrink-0
             transition-transform duration-200 md:translate-x-0
             ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
