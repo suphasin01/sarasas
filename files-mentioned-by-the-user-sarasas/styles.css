@@ -1169,3 +1169,191 @@ body.is-teacher .teacher-shell {
     bottom: 16px;
   }
 }
+
+/* === Student & Parent Panels === */
+
+.student-shell,
+.parent-shell {
+  display: none;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 24px;
+  width: min(1320px, calc(100% - 36px));
+  margin: 28px auto 34px;
+  align-items: start;
+}
+
+body.is-student .site-shell,
+body.is-student .teacher-shell,
+body.is-student .public-footer,
+body.is-student .chat-button,
+body.is-parent .site-shell,
+body.is-parent .teacher-shell,
+body.is-parent .public-footer,
+body.is-parent .chat-button {
+  display: none;
+}
+
+body.is-student .student-shell {
+  display: grid;
+}
+
+body.is-parent .parent-shell {
+  display: grid;
+}
+
+.student-avatar {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border-radius: 8px;
+  color: white;
+  background: linear-gradient(135deg, var(--blue), #5eb8ff);
+  font-weight: 900;
+}
+
+.parent-avatar {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border-radius: 8px;
+  color: white;
+  background: linear-gradient(135deg, var(--coral), var(--gold));
+  font-weight: 900;
+}
+
+.student-hero,
+.parent-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px;
+  color: white;
+}
+
+.student-hero h1,
+.parent-hero h1 {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.1;
+}
+
+.student-hero p,
+.parent-hero p {
+  max-width: 620px;
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, .82);
+}
+
+.student-hero {
+  background: linear-gradient(135deg, rgba(11, 45, 110, .97), rgba(43, 112, 184, .92));
+}
+
+.parent-hero {
+  background: linear-gradient(135deg, rgba(95, 38, 12, .97), rgba(191, 91, 69, .92));
+}
+
+/* Role tabs */
+
+.role-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.role-tab {
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  color: var(--ink);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.role-tab.active {
+  border-color: var(--green);
+  background: #eaf3ef;
+  color: var(--green-dark);
+}
+
+/* Attendance */
+
+.attendance-week {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.att-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 6px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.att-day span:first-child {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.att-day.present {
+  background: #eaf5ef;
+  color: var(--green-dark);
+}
+
+.att-day.absent {
+  background: #fdecea;
+  color: var(--coral);
+}
+
+.att-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.att-stats strong {
+  display: block;
+  color: var(--green-dark);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.att-stats span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Grade colors */
+
+.grade-a { color: var(--green); }
+.grade-b { color: var(--blue); }
+.grade-c { color: var(--coral); }
+
+@media (max-width: 980px) {
+  .student-shell,
+  .parent-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .student-hero,
+  .parent-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

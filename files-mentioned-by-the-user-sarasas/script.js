@@ -12,10 +12,37 @@ const loginDialog = document.querySelector(".login-dialog");
 const loginForm = document.querySelector(".login-form");
 const dialogClose = document.querySelector(".dialog-close");
 const loginMessage = document.querySelector(".login-message");
+const loginEmailInput = document.querySelector("#login-email");
+const loginPasswordInput = document.querySelector("#login-password");
+const loginSubmitBtn = document.querySelector(".login-submit");
+const hintEmail = document.querySelector(".hint-email");
+const roleTabs = Array.from(document.querySelectorAll(".role-tab"));
 
 let language = "th";
 let activeSlide = 0;
-let isTeacherMode = false;
+let currentRole = null;
+let selectedRole = "teacher";
+
+const roleConfig = {
+  teacher: {
+    email: "teacher@sarasas.test",
+    logoutLabel: { th: "ออกจากระบบ (ครู)", en: "Logout (Teacher)" },
+    submitLabel: "Login เข้า Teacher Panel",
+    bodyClass: "is-teacher"
+  },
+  student: {
+    email: "student@sarasas.test",
+    logoutLabel: { th: "ออกจากระบบ (นักเรียน)", en: "Logout (Student)" },
+    submitLabel: "Login เข้า Student Portal",
+    bodyClass: "is-student"
+  },
+  parent: {
+    email: "parent@sarasas.test",
+    logoutLabel: { th: "ออกจากระบบ (ผู้ปกครอง)", en: "Logout (Parent)" },
+    submitLabel: "Login เข้า Parent Portal",
+    bodyClass: "is-parent"
+  }
+};
 
 const students = {
   SR001: {
@@ -38,7 +65,7 @@ function applyLanguage(nextLanguage) {
   translations.forEach((node) => {
     node.textContent = node.dataset[language];
   });
-  if (studentInput.value.trim()) {
+  if (studentInput && studentInput.value.trim()) {
     renderStudent(studentInput.value.trim().toUpperCase());
   }
   updateLoginLabel();
@@ -46,12 +73,8 @@ function applyLanguage(nextLanguage) {
 
 function showSlide(index) {
   activeSlide = index;
-  slides.forEach((slide, slideIndex) => {
-    slide.classList.toggle("active", slideIndex === activeSlide);
-  });
-  dots.forEach((dot, dotIndex) => {
-    dot.classList.toggle("active", dotIndex === activeSlide);
-  });
+  slides.forEach((slide, i) => slide.classList.toggle("active", i === activeSlide));
+  dots.forEach((dot, i) => dot.classList.toggle("active", i === activeSlide));
 }
 
 function renderStudent(studentId) {
@@ -63,11 +86,9 @@ function renderStudent(studentId) {
     studentResult.innerHTML = `<p class="student-error">${message}</p>`;
     return;
   }
-
   const labels = language === "th"
     ? ["ชื่อ", "ระดับชั้น", "สถานะ", "ตารางเรียน"]
     : ["Name", "Grade", "Status", "Schedule"];
-
   studentResult.innerHTML = `
     <div class="student-card">
       <div><span>${labels[0]}</span><strong>${student.name}</strong></div>
@@ -80,14 +101,27 @@ function renderStudent(studentId) {
 
 function updateLoginLabel() {
   if (!loginToggle) return;
-  loginToggle.textContent = isTeacherMode
-    ? (language === "th" ? "ออกจากระบบ" : "Logout")
-    : "Login";
+  if (currentRole) {
+    const cfg = roleConfig[currentRole];
+    loginToggle.textContent = cfg.logoutLabel[language] || cfg.logoutLabel.th;
+  } else {
+    loginToggle.textContent = "Login";
+  }
 }
 
-function showTeacherPanel() {
-  isTeacherMode = true;
-  document.body.classList.add("is-teacher");
+function selectRole(role) {
+  selectedRole = role;
+  const cfg = roleConfig[role];
+  roleTabs.forEach((tab) => tab.classList.toggle("active", tab.dataset.role === role));
+  if (hintEmail) hintEmail.textContent = cfg.email;
+  if (loginEmailInput) loginEmailInput.value = cfg.email;
+  if (loginSubmitBtn) loginSubmitBtn.textContent = cfg.submitLabel;
+}
+
+function showPanel(role) {
+  currentRole = role;
+  ["is-teacher", "is-student", "is-parent"].forEach((cls) => document.body.classList.remove(cls));
+  document.body.classList.add(roleConfig[role].bodyClass);
   topnav.classList.remove("open");
   updateLoginLabel();
   loginDialog.close();
@@ -96,8 +130,8 @@ function showTeacherPanel() {
 }
 
 function showPublicSite() {
-  isTeacherMode = false;
-  document.body.classList.remove("is-teacher");
+  currentRole = null;
+  ["is-teacher", "is-student", "is-parent"].forEach((cls) => document.body.classList.remove(cls));
   topnav.classList.remove("open");
   updateLoginLabel();
   history.replaceState(null, "", window.location.pathname + window.location.search);
@@ -113,38 +147,40 @@ menuToggle.addEventListener("click", () => {
 });
 
 dots.forEach((dot) => {
-  dot.addEventListener("click", () => {
-    showSlide(Number(dot.dataset.targetSlide));
-  });
+  dot.addEventListener("click", () => showSlide(Number(dot.dataset.targetSlide)));
 });
 
-studentForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  renderStudent(studentInput.value.trim().toUpperCase());
-});
+if (studentForm) {
+  studentForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    renderStudent(studentInput.value.trim().toUpperCase());
+  });
+}
 
 loginToggle.addEventListener("click", () => {
-  if (isTeacherMode) {
+  if (currentRole) {
     showPublicSite();
     return;
   }
-
   loginMessage.textContent = "";
+  selectRole("teacher");
   loginDialog.showModal();
 });
 
-dialogClose.addEventListener("click", () => {
-  loginDialog.close();
+dialogClose.addEventListener("click", () => loginDialog.close());
+
+roleTabs.forEach((tab) => {
+  tab.addEventListener("click", () => selectRole(tab.dataset.role));
 });
 
 loginForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  const formData = new FormData(loginForm);
-  const email = formData.get("teacher-email");
-  const password = formData.get("teacher-password");
+  const email = loginEmailInput.value.trim();
+  const password = loginPasswordInput.value;
+  const cfg = roleConfig[selectedRole];
 
-  if (email === "teacher@sarasas.test" && password === "1234") {
-    showTeacherPanel();
+  if (email === cfg.email && password === "1234") {
+    showPanel(selectedRole);
     return;
   }
 
