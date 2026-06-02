@@ -1,130 +1,106 @@
 import { useState } from 'react'
-import { Modal, ModalContent, Button, Input } from '@heroui/react'
+import { Modal, ModalContent, Input, Button } from '@heroui/react'
 import { ROLES } from '../data'
 
-const ROLE_META = {
-  teacher: {
-    icon: '👨‍🏫',
-    gradient: 'from-[#0f6b57] to-[#22a07a]',
-    ring: 'ring-[#0f6b57]',
-    bg: 'bg-[#0f6b57]',
-    light: 'bg-green-50 text-green-700',
-  },
-  student: {
-    icon: '👨‍🎓',
-    gradient: 'from-[#2b70b8] to-[#4a9fd4]',
-    ring: 'ring-[#2b70b8]',
-    bg: 'bg-[#2b70b8]',
-    light: 'bg-blue-50 text-blue-700',
-  },
-  parent: {
-    icon: '👨‍👩‍👦',
-    gradient: 'from-[#c97d1a] to-[#e8a83c]',
-    ring: 'ring-[#c97d1a]',
-    bg: 'bg-[#c97d1a]',
-    light: 'bg-amber-50 text-amber-700',
-  },
+const META = {
+  teacher: { icon: '👨‍🏫', from: '#0f6b57', to: '#1a9970', hint: '#dcfce7', hintText: '#166534' },
+  student: { icon: '👨‍🎓', from: '#2b70b8', to: '#3d8fd4', hint: '#dbeafe', hintText: '#1e40af' },
+  parent:  { icon: '👨‍👩‍👦', from: '#b86e10', to: '#d9952a', hint: '#fef3c7', hintText: '#92400e' },
 }
 
 export default function LoginModal({ isOpen, onLogin, onClose }) {
-  const [selectedRole, setSelectedRole] = useState('teacher')
-  const [email, setEmail] = useState(ROLES.teacher.email)
+  const [role, setRole]         = useState('teacher')
+  const [email, setEmail]       = useState(ROLES.teacher.email)
   const [password, setPassword] = useState('1234')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [error, setError]       = useState('')
+  const [loading, setLoading]   = useState(false)
 
-  function handleRoleChange(key) {
-    setSelectedRole(key)
+  function pickRole(key) {
+    setRole(key)
     setEmail(ROLES[key].email)
     setError('')
   }
 
-  async function handleSubmit() {
-    const cfg = ROLES[selectedRole]
+  async function submit() {
     setLoading(true)
-    await new Promise((r) => setTimeout(r, 400))
+    await new Promise((r) => setTimeout(r, 350))
     setLoading(false)
-    if (email === cfg.email && password === '1234') {
-      onLogin(selectedRole)
-      setError('')
+    if (email === ROLES[role].email && password === '1234') {
+      onLogin(role)
     } else {
       setError('Email หรือ Password ไม่ถูกต้อง')
     }
   }
 
-  const meta = ROLE_META[selectedRole]
+  const m = META[role]
 
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
       placement="center"
-      size="md"
+      size="sm"
       isDismissable={false}
       hideCloseButton
-      classNames={{
-        base: 'rounded-3xl overflow-hidden shadow-2xl',
-        wrapper: 'p-4',
-      }}
+      classNames={{ base: 'rounded-2xl overflow-hidden', wrapper: 'p-4 items-center' }}
+      scrollBehavior="inside"
     >
       <ModalContent>
-        {/* ── Gradient header ── */}
-        <div className={`relative overflow-hidden bg-gradient-to-br ${meta.gradient} px-6 py-8 text-white text-center`}>
-          {/* Decorative circles */}
-          <div className="absolute -top-6 -right-6 w-24 h-24 bg-white/10 rounded-full" />
-          <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-white/10 rounded-full" />
 
-          <div className="relative">
-            <div className="w-16 h-16 bg-white/20 border border-white/30 rounded-2xl mx-auto flex items-center justify-center text-3xl font-black mb-4 backdrop-blur-sm shadow-lg">
-              S
-            </div>
-            <p className="font-extrabold text-lg tracking-wide">โรงเรียนสารสาสน์</p>
-            <p className="text-white/70 text-sm font-medium mt-0.5">Sarasas School Portal</p>
+        {/* ── Header ── */}
+        <div
+          className="px-6 py-7 text-white text-center relative overflow-hidden"
+          style={{ background: `linear-gradient(135deg, ${m.from}, ${m.to})` }}
+        >
+          <div className="absolute -top-5 -right-5 w-20 h-20 rounded-full bg-white/10 pointer-events-none" />
+          <div className="w-14 h-14 rounded-2xl bg-white/20 border border-white/30 mx-auto flex items-center justify-center text-2xl font-black mb-3">
+            S
           </div>
+          <p className="font-extrabold text-lg">โรงเรียนสารสาสน์</p>
+          <p className="text-white/65 text-sm">Sarasas School Portal</p>
         </div>
 
-        {/* ── Role selector ── */}
-        <div className="px-6 pt-5 pb-1">
-          <p className="text-[11px] font-bold text-default-400 tracking-widest uppercase text-center mb-3">
-            เลือกบทบาทของคุณ
-          </p>
-          <div className="grid grid-cols-3 gap-2">
-            {Object.entries(ROLES).map(([key, { label }]) => {
-              const m = ROLE_META[key]
-              const active = selectedRole === key
-              return (
-                <button
-                  key={key}
-                  onClick={() => handleRoleChange(key)}
-                  className={`
-                    flex flex-col items-center gap-1.5 py-3 px-2 rounded-2xl
-                    border-2 transition-all duration-200 font-semibold
-                    ${active
-                      ? `bg-gradient-to-br ${m.gradient} text-white border-transparent shadow-lg scale-105`
-                      : 'bg-default-50 text-default-500 border-default-200 hover:border-default-300 hover:bg-default-100'
+        {/* ── Body ── */}
+        <div className="px-5 py-5 space-y-4">
+
+          {/* Role selector */}
+          <div>
+            <p className="text-[10px] font-bold text-gray-400 tracking-widest uppercase text-center mb-2">
+              เลือกบทบาท
+            </p>
+            <div className="grid grid-cols-3 gap-2">
+              {Object.entries(ROLES).map(([key, { label }]) => {
+                const mk = META[key]
+                const active = role === key
+                return (
+                  <button
+                    key={key}
+                    onClick={() => pickRole(key)}
+                    className="flex flex-col items-center gap-1 py-3 rounded-xl border-2 transition-all duration-200"
+                    style={
+                      active
+                        ? { background: `linear-gradient(135deg, ${mk.from}, ${mk.to})`, borderColor: 'transparent', color: 'white', transform: 'scale(1.04)' }
+                        : { background: '#f9fafb', borderColor: '#e5e7eb', color: '#6b7280' }
                     }
-                  `}
-                >
-                  <span className="text-2xl leading-none">{m.icon}</span>
-                  <span className="text-[11px]">{label}</span>
-                </button>
-              )
-            })}
+                  >
+                    <span className="text-xl leading-none">{mk.icon}</span>
+                    <span className="text-[11px] font-semibold">{label}</span>
+                  </button>
+                )
+              })}
+            </div>
           </div>
-        </div>
 
-        {/* ── Form ── */}
-        <div className="px-6 pt-4 pb-1 space-y-4">
           {/* Credential hint */}
-          <div className={`flex items-start gap-2 rounded-xl px-3 py-2.5 text-xs ${meta.light}`}>
-            <span className="mt-0.5 shrink-0">💡</span>
-            <span>
-              บัญชีทดสอบ:{' '}
-              <span className="font-bold font-mono">{ROLES[selectedRole].email}</span>
-              {' '}/ <span className="font-bold font-mono">1234</span>
-            </span>
+          <div
+            className="text-xs rounded-xl px-3 py-2.5 leading-relaxed"
+            style={{ background: m.hint, color: m.hintText }}
+          >
+            💡 บัญชีทดสอบ: <span className="font-bold font-mono">{ROLES[role].email}</span>
+            {' '}/ <span className="font-bold font-mono">1234</span>
           </div>
 
+          {/* Inputs */}
           <Input
             label="Email"
             type="email"
@@ -133,14 +109,8 @@ export default function LoginModal({ isOpen, onLogin, onClose }) {
             variant="bordered"
             labelPlacement="outside"
             placeholder="email@example.com"
-            classNames={{
-              label: 'text-xs font-semibold text-default-600',
-              input: 'text-sm',
-              inputWrapper: 'rounded-xl',
-            }}
-            startContent={<span className="text-default-400 text-sm">✉️</span>}
+            classNames={{ label: 'text-xs font-semibold', inputWrapper: 'rounded-xl' }}
           />
-
           <Input
             label="Password"
             type="password"
@@ -149,46 +119,32 @@ export default function LoginModal({ isOpen, onLogin, onClose }) {
             variant="bordered"
             labelPlacement="outside"
             placeholder="••••••"
-            classNames={{
-              label: 'text-xs font-semibold text-default-600',
-              input: 'text-sm',
-              inputWrapper: 'rounded-xl',
-            }}
-            startContent={<span className="text-default-400 text-sm">🔒</span>}
-            onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+            classNames={{ label: 'text-xs font-semibold', inputWrapper: 'rounded-xl' }}
+            onKeyDown={(e) => e.key === 'Enter' && submit()}
           />
 
           {error && (
-            <div className="flex items-center gap-2 text-danger text-xs bg-danger-50 rounded-xl px-3 py-2">
-              <span>⚠️</span>
-              <span>{error}</span>
-            </div>
+            <p className="text-red-500 text-xs bg-red-50 rounded-xl px-3 py-2">⚠️ {error}</p>
           )}
-        </div>
 
-        {/* ── Actions ── */}
-        <div className="px-6 pb-6 pt-4 space-y-2.5">
-          <Button
-            fullWidth
-            size="lg"
-            isLoading={loading}
-            className={`bg-gradient-to-r ${meta.gradient} text-white font-bold text-sm rounded-xl shadow-md`}
-            onPress={handleSubmit}
+          {/* Buttons */}
+          <button
+            onClick={submit}
+            disabled={loading}
+            className="w-full py-3 rounded-xl text-white font-bold text-sm transition-opacity disabled:opacity-70"
+            style={{ background: `linear-gradient(135deg, ${m.from}, ${m.to})` }}
           >
-            {!loading && <span className="mr-1">{meta.icon}</span>}
-            เข้าสู่ระบบ {ROLES[selectedRole].label}
-          </Button>
-          <Button
-            fullWidth
-            variant="light"
-            size="sm"
-            color="default"
-            className="rounded-xl text-default-400"
-            onPress={onClose}
+            {loading ? 'กำลังเข้าสู่ระบบ…' : `${m.icon} เข้าสู่ระบบ ${ROLES[role].label}`}
+          </button>
+
+          <button
+            onClick={onClose}
+            className="w-full py-2 rounded-xl text-gray-400 text-sm hover:bg-gray-50 transition-colors"
           >
             ยกเลิก
-          </Button>
+          </button>
         </div>
+
       </ModalContent>
     </Modal>
   )
