@@ -3,54 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>โรงเรียนสารสาสน์วิเทศบางบัวทอง</title>
+  <title>Sarasas School</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<!-- ปุ่มความเป็นมา -->
-<dialog class="history-image-dialog" id="historyImageDialog">
-  <button class="close-image" type="button">×</button>
-
-  <img src="assets/history.jpg"
-       alt="ประวัติโรงเรียนสารสาสน์วิเทศบางบัวทอง">
-</dialog>
-<!-- ปุ่มความเป็นมา -->
 <body>
   <header class="topbar">
-    <a class="brand" href="#home" aria-label="Sarasas Witaed Bangbuathong School home">
-      <span class="brand-mark">
-        <img src="assets/school-logo.jpg" alt="โลโก้โรงเรียนสารสาสน์วิเทศบางบัวทอง">
-      </span>
+    <a class="brand" href="#home" aria-label="Sarasas School home">
+      <span class="brand-mark">S</span>
       <span>
-        <strong data-th="โรงเรียนสารสาสน์วิเทศบางบัวทอง" data-en="Sarasas Witaed Bangbuathong School">โรงเรียนสารสาสน์วิเทศบางบัวทอง</strong>
-        <small data-th="Sarasas Witaed Bangbuathong School" data-en="Bilingual Education">Sarasas Witaed Bangbuathong School</small>
+        <strong data-th="โรงเรียนสารสาสน์" data-en="Sarasas School">โรงเรียนสารสาสน์</strong>
+        <small data-th="Bilingual Education" data-en="Bilingual Education">Bilingual Education</small>
       </span>
     </a>
 
-    <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+    <button class="menu-toggle" type="button" aria-label="Open menu">☰</button>
 
     <nav class="topnav" aria-label="Primary navigation">
-      <a href="#news" data-icon="ข่าว" data-th="ข่าวสาร" data-en="News">ข่าวสาร</a>
-      <a href="#announcements" data-icon="ประกาศ" data-th="ประกาศ" data-en="Announcements">ประกาศ</a>
-      <a href="#student-portal" data-icon="รหัส" data-th="รหัสนักเรียน" data-en="Student ID">รหัสนักเรียน</a>
+      <a href="#news" data-th="ข่าวสาร" data-en="News">ข่าวสาร</a>
+      <a href="#announcements" data-th="ประกาศ" data-en="Announcements">ประกาศ</a>
+      <a href="#student-portal" data-th="รหัสนักเรียน" data-en="Student ID">รหัสนักเรียน</a>
       <button class="login-toggle" type="button" data-th="Login" data-en="Login">Login</button>
       <button class="language-toggle" type="button" aria-label="Change language">TH / EN</button>
     </nav>
   </header>
-  <div class="menu-overlay" aria-hidden="true"></div>
 
   <main id="home" class="site-shell">
     <aside class="sidebar" aria-label="School information">
       <section class="sidebar-group">
         <h2 data-th="ข้อมูลโรงเรียน" data-en="School Profile">ข้อมูลโรงเรียน</h2>
-        <a href="#history" class="history-link" data-th="ความเป็นมา" data-en="History">ความเป็นมา</a>
-        <a href="#identity" class="identity-link" data-th="อัตลักษณ์" data-en="Identity">อัตลักษณ์</a>
-        <a href="#symbol" class="symbol-link" data-th="ตราสัญลักษณ์" data-en="School Emblem">ตราสัญลักษณ์</a>
-        <a href="#song" class="song-link" data-th="เพลงประจำโรงเรียน" data-en="School Song">เพลงประจำโรงเรียน</a>
-        <a href="#admission" class="admission-link" data-th="ADMISSION" data-en="ADMISSION">ADMISSION</a>
+        <a href="#history" data-th="ความเป็นมา" data-en="History">ความเป็นมา</a>
+        <a href="#identity" data-th="อัตลักษณ์" data-en="Identity">อัตลักษณ์</a>
+        <a href="#symbol" data-th="ตราสัญลักษณ์" data-en="School Emblem">ตราสัญลักษณ์</a>
+        <a href="#song" data-th="เพลงประจำโรงเรียน" data-en="School Song">เพลงประจำโรงเรียน</a>
+        <a href="#admission" data-th="ADMISSION" data-en="ADMISSION">ADMISSION</a>
       </section>
 
       <section class="sidebar-group">
@@ -67,7 +52,7 @@
           <img src="assets/activity1.jpg" alt="ปฏิทินการศึกษา ภาคเรียนที่ 2/2568 Sarasas Witaed Bangbuathong School">
         </div>
         <div class="hero-copy">
-          <p class="eyebrow" data-th="Sarasas Witaed Bangbuathong School" data-en="Sarasas Witaed Bangbuathong School">Sarasas Witaed Bangbuathong School</p>
+          <p class="eyebrow" data-th="Sarasas School Website" data-en="Sarasas School Website">Sarasas School Website</p>
           <h1 id="hero-title" data-th="พื้นที่กลางสำหรับข่าวสาร การเรียน และบริการนักเรียน" data-en="A central place for news, learning, and student services">พื้นที่กลางสำหรับข่าวสาร การเรียน และบริการนักเรียน</h1>
           <p data-th="ติดตามประกาศสำคัญ ดูปฏิทินโรงเรียน ตรวจสอบเส้นทางรถ และค้นหาสถานะนักเรียนได้ในหน้าเดียว" data-en="Follow announcements, view the academic calendar, check school bus routes, and search student status in one place.">ติดตามประกาศสำคัญ ดูปฏิทินโรงเรียน ตรวจสอบเส้นทางรถ และค้นหาสถานะนักเรียนได้ในหน้าเดียว</p>
           <div class="hero-actions">
@@ -77,9 +62,20 @@
         </div>
       </section>
 
-      
-
-      
+      <section class="quick-strip" aria-label="School statistics">
+        <article>
+          <strong>2,480</strong>
+          <span data-th="นักเรียน" data-en="Students">นักเรียน</span>
+        </article>
+        <article>
+          <strong>186</strong>
+          <span data-th="ครูและบุคลากร" data-en="Teachers and staff">ครูและบุคลากร</span>
+        </article>
+        <article>
+          <strong>3</strong>
+          <span data-th="หลักสูตรสองภาษา" data-en="Bilingual programmes">หลักสูตรสองภาษา</span>
+        </article>
+      </section>
 
       <section class="feature-grid" aria-label="Main content">
         <article class="slideshow panel">
@@ -152,6 +148,21 @@
         </section>
       </section>
 
+      <section class="programme-band" aria-label="Programmes">
+        <article id="bilingual">
+          <h2>Bilingual Programme</h2>
+          <p data-th="ภาษาอังกฤษเข้มข้น ควบคู่พื้นฐานวิชาการไทย" data-en="Strong English learning alongside Thai academic foundations.">ภาษาอังกฤษเข้มข้น ควบคู่พื้นฐานวิชาการไทย</p>
+        </article>
+        <article id="asean">
+          <h2>ASEAN Bilingual</h2>
+          <p data-th="เสริมทักษะสื่อสารและความเข้าใจวัฒนธรรมอาเซียน" data-en="Communication skills with ASEAN cultural awareness.">เสริมทักษะสื่อสารและความเข้าใจวัฒนธรรมอาเซียน</p>
+        </article>
+        <article id="mini">
+          <h2>Mini Bilingual</h2>
+          <p data-th="เริ่มต้นสองภาษาอย่างมั่นใจสำหรับเด็กเล็ก" data-en="A confident bilingual start for younger learners.">เริ่มต้นสองภาษาอย่างมั่นใจสำหรับเด็กเล็ก</p>
+        </article>
+      </section>
+
       <section id="student-portal" class="portal panel" aria-labelledby="portal-title">
         <div>
           <p class="eyebrow" data-th="Student Portal" data-en="Student Portal">Student Portal</p>
@@ -169,37 +180,6 @@
           <p data-th="ผลการค้นหาจะแสดงที่นี่" data-en="Search results will appear here.">ผลการค้นหาจะแสดงที่นี่</p>
         </div>
       </section>
-
-      <section class="programme-band" aria-label="Programmes">
-        <article id="bilingual">
-          <h2>Bilingual Programme</h2>
-          <p data-th="ภาษาอังกฤษเข้มข้น ควบคู่พื้นฐานวิชาการไทย" data-en="Strong English learning alongside Thai academic foundations.">ภาษาอังกฤษเข้มข้น ควบคู่พื้นฐานวิชาการไทย</p>
-        </article>
-        <article id="asean">
-          <h2>ASEAN Bilingual</h2>
-          <p data-th="เสริมทักษะสื่อสารและความเข้าใจวัฒนธรรมอาเซียน" data-en="Communication skills with ASEAN cultural awareness.">เสริมทักษะสื่อสารและความเข้าใจวัฒนธรรมอาเซียน</p>
-        </article>
-        <article id="mini">
-          <h2>Mini Bilingual</h2>
-          <p data-th="เริ่มต้นสองภาษาอย่างมั่นใจสำหรับเด็กเล็ก" data-en="A confident bilingual start for younger learners.">เริ่มต้นสองภาษาอย่างมั่นใจสำหรับเด็กเล็ก</p>
-        </article>
-      </section>
-
-      <section class="quick-strip" aria-label="School statistics">
-        <article>
-          <strong>2,480</strong>
-          <span data-th="นักเรียน" data-en="Students">นักเรียน</span>
-        </article>
-        <article>
-          <strong>186</strong>
-          <span data-th="ครูและบุคลากร" data-en="Teachers and staff">ครูและบุคลากร</span>
-        </article>
-        <article>
-          <strong>3</strong>
-          <span data-th="หลักสูตรสองภาษา" data-en="Bilingual programmes">หลักสูตรสองภาษา</span>
-        </article>
-      </section>
-      
     </section>
   </main>
 
@@ -389,6 +369,350 @@
     </section>
   </main>
 
+  <!-- STUDENT SHELL -->
+  <main class="student-shell" aria-label="Student Panel">
+    <aside class="teacher-sidebar" aria-label="Student menu">
+      <section class="teacher-profile">
+        <span class="student-avatar">ก</span>
+        <div>
+          <strong>กานต์พิชชา วงศ์สวัสดิ์</strong>
+          <small>ป.6/1 · รหัส SR001</small>
+        </div>
+      </section>
+      <nav class="teacher-menu">
+        <section>
+          <h2>🏠 ภาพรวม</h2>
+          <a href="#std-dashboard">หน้าหลัก</a>
+          <a href="#std-today">ตารางวันนี้</a>
+          <a href="#std-notif">การแจ้งเตือน</a>
+        </section>
+        <section>
+          <h2>📚 การเรียน</h2>
+          <a href="#std-timetable">ตารางเรียน</a>
+          <a href="#std-homework">การบ้าน / งาน</a>
+          <a href="#std-exams">ตารางสอบ</a>
+          <a href="#std-online">ห้องเรียนออนไลน์</a>
+          <a href="#std-docs">เอกสารประกอบการสอน</a>
+        </section>
+        <section>
+          <h2>📊 ผลการเรียน</h2>
+          <a href="#std-grades">คะแนนและเกรด</a>
+          <a href="#std-attendance">การมาเรียน</a>
+          <a href="#std-behavior">คะแนนความประพฤติ</a>
+        </section>
+        <section>
+          <h2>💬 สื่อสาร</h2>
+          <a href="#std-chat">แชทกับครู</a>
+          <a href="#std-announce">ประกาศห้องเรียน</a>
+          <a href="#std-news">ข่าวสารโรงเรียน</a>
+        </section>
+        <section>
+          <h2>👤 ตัวฉัน</h2>
+          <a href="#std-profile">โปรไฟล์</a>
+          <a href="#std-settings">ตั้งค่า</a>
+        </section>
+      </nav>
+    </aside>
+
+    <section class="teacher-content" id="std-dashboard">
+      <section class="student-hero panel">
+        <div>
+          <p class="eyebrow">Student Portal</p>
+          <h1>สวัสดี กานต์พิชชา 👋</h1>
+          <p>วันนี้มีเรียน 5 คาบ · การบ้านค้างส่ง 2 ชิ้น · คะแนนเฉลี่ย 3.7 GPA</p>
+        </div>
+        <div class="today-card">
+          <span>วันนี้</span>
+          <strong>13 พ.ค. 2026</strong>
+          <small>จันทร์ · ภาคเรียนที่ 1</small>
+        </div>
+      </section>
+
+      <section class="quick-actions panel" aria-label="Quick Actions">
+        <div class="section-heading">
+          <span>Quick Actions</span>
+          <small>ทำได้เลยในคลิกเดียว</small>
+        </div>
+        <div class="action-grid">
+          <button type="button">ส่งการบ้าน</button>
+          <button type="button">ดูคะแนน</button>
+          <button type="button">แชทครู</button>
+          <button type="button">ดูตารางสอบ</button>
+        </div>
+      </section>
+
+      <section class="teacher-grid">
+        <article id="std-today" class="panel teacher-card">
+          <div class="section-heading">
+            <span>ตารางเรียนวันนี้</span>
+            <a href="#std-timetable">ดูทั้งหมด</a>
+          </div>
+          <div class="schedule-list">
+            <div><time>08:30</time><strong>คณิตศาสตร์</strong><span>ห้อง 603 · ครูกานต์</span></div>
+            <div><time>09:30</time><strong>ภาษาอังกฤษ</strong><span>ห้อง 502 · Mr. James</span></div>
+            <div><time>10:20</time><strong>วิทยาศาสตร์</strong><span>LAB 1 · ครูนภา</span></div>
+            <div><time>13:00</time><strong>ภาษาไทย</strong><span>ห้อง 603 · ครูสมฤดี</span></div>
+            <div><time>14:00</time><strong>สังคมศึกษา</strong><span>ห้อง 603 · ครูวีระ</span></div>
+          </div>
+        </article>
+
+        <article id="std-homework" class="panel teacher-card">
+          <div class="section-heading">
+            <span>การบ้านที่รอส่ง</span>
+            <a href="#std-homework">ดูทั้งหมด</a>
+          </div>
+          <ul class="teacher-list">
+            <li><strong>แบบฝึกหัด Fractions</strong><span>คณิตศาสตร์ · ครบกำหนดพรุ่งนี้ ⚠️</span></li>
+            <li><strong>Essay "My Dream Job"</strong><span>ภาษาอังกฤษ · ครบกำหนด 16 พ.ค.</span></li>
+            <li><strong>รายงานระบบสุริยะ</strong><span>วิทยาศาสตร์ · ส่งแล้ว ✓</span></li>
+          </ul>
+        </article>
+      </section>
+
+      <article id="std-grades" class="panel teacher-card">
+        <div class="section-heading">
+          <span>ผลการเรียนล่าสุด</span>
+          <a href="#std-grades">ดูรายงานเต็ม</a>
+        </div>
+        <div class="task-table">
+          <div class="task-row task-head"><span>วิชา</span><span>คะแนน</span><span>เกรด</span></div>
+          <div class="task-row"><span>คณิตศาสตร์</span><span>88 / 100</span><strong class="grade-a">A</strong></div>
+          <div class="task-row"><span>ภาษาอังกฤษ</span><span>92 / 100</span><strong class="grade-a">A</strong></div>
+          <div class="task-row"><span>วิทยาศาสตร์</span><span>78 / 100</span><strong class="grade-b">B+</strong></div>
+          <div class="task-row"><span>ภาษาไทย</span><span>85 / 100</span><strong class="grade-a">A</strong></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <!-- PARENT SHELL -->
+  <main class="parent-shell" aria-label="Parent Panel">
+    <aside class="teacher-sidebar" aria-label="Parent menu">
+      <section class="teacher-profile">
+        <span class="parent-avatar">ว</span>
+        <div>
+          <strong>คุณวิไล วงศ์สวัสดิ์</strong>
+          <small>ผู้ปกครองของ กานต์พิชชา</small>
+        </div>
+      </section>
+      <nav class="teacher-menu">
+        <section>
+          <h2>🏠 ภาพรวม</h2>
+          <a href="#par-dashboard">หน้าหลัก</a>
+          <a href="#par-child">ข้อมูลบุตรหลาน</a>
+          <a href="#par-notif">การแจ้งเตือน</a>
+        </section>
+        <section>
+          <h2>📊 ผลการเรียน</h2>
+          <a href="#par-grades">คะแนนและเกรด</a>
+          <a href="#par-attendance">การมาเรียน</a>
+          <a href="#par-behavior">คะแนนความประพฤติ</a>
+          <a href="#par-report">รายงานผลการเรียน</a>
+        </section>
+        <section>
+          <h2>💬 สื่อสาร</h2>
+          <a href="#par-chat">ข้อความจากครู</a>
+          <a href="#par-contact">ติดต่อครู</a>
+          <a href="#par-announce">ประกาศโรงเรียน</a>
+        </section>
+        <section>
+          <h2>📅 กิจกรรม</h2>
+          <a href="#par-calendar">ปฏิทินกิจกรรม</a>
+          <a href="#par-meeting">นัดพบครู</a>
+        </section>
+        <section>
+          <h2>🚌 รถโรงเรียน</h2>
+          <a href="#par-bus">ติดตามรถสด</a>
+          <a href="#par-bus-history">ประวัติการรับส่ง</a>
+        </section>
+        <section>
+          <h2>💳 การเงิน</h2>
+          <a href="#par-fees">ค่าธรรมเนียม</a>
+          <a href="#par-payment">ประวัติชำระ</a>
+        </section>
+        <section>
+          <h2>👤 บัญชี</h2>
+          <a href="#par-profile">โปรไฟล์</a>
+          <a href="#par-settings">ตั้งค่า</a>
+        </section>
+      </nav>
+    </aside>
+
+    <section class="teacher-content" id="par-dashboard">
+      <section class="parent-hero panel">
+        <div>
+          <p class="eyebrow">Parent Portal</p>
+          <h1>สวัสดี คุณวิไล 👋</h1>
+          <p>กานต์พิชชา มาเรียน 18/19 วัน · GPA 3.7 · ข้อความใหม่จากครู 2 รายการ</p>
+        </div>
+        <div class="today-card">
+          <span>บุตรหลาน</span>
+          <strong>กานต์พิชชา</strong>
+          <small>ป.6/1 · รหัส SR001</small>
+        </div>
+      </section>
+
+      <section class="quick-actions panel" aria-label="Quick Actions">
+        <div class="section-heading">
+          <span>Quick Actions</span>
+        </div>
+        <div class="action-grid">
+          <button type="button">ติดต่อครู</button>
+          <button type="button">ดูผลการเรียน</button>
+          <button type="button">ชำระค่าธรรมเนียม</button>
+          <button type="button">นัดพบครู</button>
+        </div>
+      </section>
+
+      <section class="teacher-grid">
+        <article id="par-attendance" class="panel teacher-card">
+          <div class="section-heading">
+            <span>การมาเรียนสัปดาห์นี้</span>
+            <a href="#par-attendance">ดูประวัติ</a>
+          </div>
+          <div class="attendance-week">
+            <div class="att-day present"><span>จ.</span><span>✓</span></div>
+            <div class="att-day present"><span>อ.</span><span>✓</span></div>
+            <div class="att-day present"><span>พ.</span><span>✓</span></div>
+            <div class="att-day absent"><span>พฤ.</span><span>ลา</span></div>
+            <div class="att-day present"><span>ศ.</span><span>✓</span></div>
+          </div>
+          <div class="att-stats">
+            <div><strong>18</strong><span>วันที่มา</span></div>
+            <div><strong>1</strong><span>วันลา</span></div>
+            <div><strong>0</strong><span>ขาด</span></div>
+            <div><strong>97%</strong><span>เวลาเรียน</span></div>
+          </div>
+        </article>
+
+        <article id="par-chat" class="panel teacher-card">
+          <div class="section-heading">
+            <span>ข้อความจากครู</span>
+            <a href="#par-contact">ติดต่อครู</a>
+          </div>
+          <ul class="teacher-list">
+            <li>
+              <strong>ครูกานต์พิชชา (คณิตฯ)</strong>
+              <span>กานต์พิชชาทำแบบฝึกหัดได้ดีมาก ช่วยเตือนเรื่องส่งการบ้านด้วยนะคะ</span>
+            </li>
+            <li>
+              <strong>Mr. James (English)</strong>
+              <span>Please remind your child to submit the essay by Friday.</span>
+            </li>
+          </ul>
+        </article>
+      </section>
+
+      <article id="par-grades" class="panel teacher-card">
+        <div class="section-heading">
+          <span>ผลการเรียน · กานต์พิชชา</span>
+          <a href="#par-report">รายงานเต็ม</a>
+        </div>
+        <div class="task-table">
+          <div class="task-row task-head"><span>วิชา</span><span>คะแนน</span><span>เกรด</span></div>
+          <div class="task-row"><span>คณิตศาสตร์</span><span>88 / 100</span><strong class="grade-a">A</strong></div>
+          <div class="task-row"><span>ภาษาอังกฤษ</span><span>92 / 100</span><strong class="grade-a">A</strong></div>
+          <div class="task-row"><span>วิทยาศาสตร์</span><span>78 / 100</span><strong class="grade-b">B+</strong></div>
+          <div class="task-row"><span>ภาษาไทย</span><span>85 / 100</span><strong class="grade-a">A</strong></div>
+        </div>
+      </article>
+
+      <article id="par-fees" class="panel teacher-card">
+        <div class="section-heading">
+          <span>ค่าธรรมเนียมการศึกษา</span>
+          <a href="#par-payment">ประวัติชำระ</a>
+        </div>
+        <div class="task-table">
+          <div class="task-row task-head"><span>รายการ</span><span>จำนวน</span><span>สถานะ</span></div>
+          <div class="task-row"><span>ค่าเล่าเรียนภาค 1</span><span>28,000 ฿</span><strong class="grade-a">ชำระแล้ว</strong></div>
+          <div class="task-row"><span>ค่ากิจกรรม</span><span>2,500 ฿</span><strong class="grade-c">ค้างชำระ</strong></div>
+          <div class="task-row"><span>ค่าอาหาร (พ.ค.)</span><span>1,800 ฿</span><strong class="grade-a">ชำระแล้ว</strong></div>
+        </div>
+      </article>
+
+      <article id="par-bus" class="panel bus-tracker">
+        <div class="bus-tracker-header">
+          <div>
+            <div class="bus-tracker-title">
+              <span>ติดตามรถโรงเรียนสด</span>
+              <span class="live-badge">● LIVE</span>
+            </div>
+            <p class="bus-route-name">รถสาย 3 · ทะเบียน 40-1234 กท · คนขับ สมชาย ใจดี</p>
+          </div>
+          <span class="last-update">อัปเดต 07:09 น.</span>
+        </div>
+
+        <div class="eta-banner">
+          <div>
+            <p class="eta-stop">📍 จุดรับ: หน้าปากซอยสุขุมวิท 71</p>
+            <p class="eta-countdown">รถจะถึงใน <strong><span class="eta-minutes">12</span> นาที</strong></p>
+            <p class="eta-clock">ประมาณ 07:22 น.</p>
+          </div>
+          <span class="eta-bus-icon">🚌</span>
+        </div>
+
+        <div class="route-viz" aria-label="เส้นทางรถ">
+          <div class="route-track"><div class="route-fill" style="width:40%"></div></div>
+          <div class="route-stops-row">
+            <div class="rstop done"><div class="rstop-dot"></div><span>โรงเรียน</span></div>
+            <div class="rstop done"><div class="rstop-dot"></div><span>บางนา</span></div>
+            <div class="rstop current"><span class="rstop-bus">🚌</span><div class="rstop-dot"></div><span>ศรีนครินทร์</span></div>
+            <div class="rstop mine"><div class="rstop-dot"></div><span>สุขุมวิท 71 ⭐</span></div>
+            <div class="rstop"><div class="rstop-dot"></div><span>อ่อนนุช</span></div>
+            <div class="rstop"><div class="rstop-dot"></div><span>ปลายทาง</span></div>
+          </div>
+        </div>
+
+        <div class="stop-timeline">
+          <div class="stop-row done">
+            <div class="stop-marker"></div>
+            <div class="stop-detail"><strong>โรงเรียนสารสาสน์ (ออกเดินทาง)</strong><span>ออก 06:40 น.</span></div>
+            <span class="stop-tag passed">ผ่านแล้ว</span>
+          </div>
+          <div class="stop-row done">
+            <div class="stop-marker"></div>
+            <div class="stop-detail"><strong>สี่แยกบางนา</strong><span>06:55 น.</span></div>
+            <span class="stop-tag passed">ผ่านแล้ว</span>
+          </div>
+          <div class="stop-row active">
+            <div class="stop-marker"></div>
+            <div class="stop-detail"><strong>ศรีนครินทร์ ซอย 5</strong><span>07:10 น. · กำลังเข้าใกล้</span></div>
+            <span class="stop-tag current-tag">🚌 ใกล้แล้ว</span>
+          </div>
+          <div class="stop-row mine">
+            <div class="stop-marker"></div>
+            <div class="stop-detail">
+              <strong>หน้าปากซอยสุขุมวิท 71</strong>
+              <span class="my-stop-label">⭐ จุดรับของคุณ</span>
+              <span>ประมาณ <span class="eta-arrival">07:22</span> น.</span>
+            </div>
+            <span class="stop-tag eta-tag">อีก <span class="eta-minutes">12</span> นาที</span>
+          </div>
+          <div class="stop-row upcoming">
+            <div class="stop-marker"></div>
+            <div class="stop-detail"><strong>อ่อนนุช ซอย 10</strong><span>ประมาณ 07:35 น.</span></div>
+            <span class="stop-tag waiting">รอ</span>
+          </div>
+          <div class="stop-row upcoming">
+            <div class="stop-marker"></div>
+            <div class="stop-detail"><strong>สุขุมวิท 77 (ปลายทาง)</strong><span>ประมาณ 07:45 น.</span></div>
+            <span class="stop-tag waiting">รอ</span>
+          </div>
+        </div>
+
+        <div class="driver-info">
+          <div class="driver-face">ส</div>
+          <div class="driver-detail">
+            <strong>สมชาย ใจดี</strong>
+            <span>คนขับ · 02-000-1111</span>
+          </div>
+          <button type="button" class="driver-call">📞 โทรหาคนขับ</button>
+          <button type="button" class="driver-report">⚠️ แจ้งปัญหา</button>
+        </div>
+      </article>
+    </section>
+  </main>
+
   <footer class="footer public-footer">
     <section>
       <h2 data-th="ติดต่อโรงเรียน" data-en="Contact">ติดต่อโรงเรียน</h2>
@@ -409,18 +733,22 @@
   <dialog class="login-dialog" aria-labelledby="login-title">
     <form class="login-form" method="dialog">
       <button class="dialog-close" type="button" aria-label="Close login">×</button>
-      <p class="eyebrow">Teacher Login</p>
-      <h2 id="login-title">เข้าสู่ระบบคุณครู</h2>
-      <p>ใช้บัญชีตัวอย่าง: <strong>teacher@sarasas.test</strong> / <strong>1234</strong></p>
-      <label for="teacher-email">Email</label>
-      <input id="teacher-email" name="teacher-email" type="email" value="teacher@sarasas.test" autocomplete="username">
-      <label for="teacher-password">Password</label>
-      <input id="teacher-password" name="teacher-password" type="password" value="1234" autocomplete="current-password">
-      <button type="submit">Login เข้า Teacher Panel</button>
+      <h2 id="login-title">เข้าสู่ระบบ</h2>
+      <div class="role-tabs" role="tablist">
+        <button type="button" class="role-tab active" data-role="teacher">👨‍🏫 ครู</button>
+        <button type="button" class="role-tab" data-role="student">👨‍🎓 นักเรียน</button>
+        <button type="button" class="role-tab" data-role="parent">👨‍👩‍👦 ผู้ปกครอง</button>
+      </div>
+      <p class="login-hint">ใช้บัญชีตัวอย่าง: <strong class="hint-email">teacher@sarasas.test</strong> / <strong>1234</strong></p>
+      <label for="login-email">Email</label>
+      <input id="login-email" name="login-email" type="email" value="teacher@sarasas.test" autocomplete="username">
+      <label for="login-password">Password</label>
+      <input id="login-password" name="login-password" type="password" value="1234" autocomplete="current-password">
+      <button type="submit" class="login-submit">Login เข้า Teacher Panel</button>
       <p class="login-message" aria-live="polite"></p>
     </form>
   </dialog>
 
-  <script src="script.js?v=5"></script>
+  <script src="script.js?v=6"></script>
 </body>
 </html>

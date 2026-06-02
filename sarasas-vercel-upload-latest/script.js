@@ -2,7 +2,6 @@ const translations = document.querySelectorAll("[data-th][data-en]");
 const languageToggle = document.querySelector(".language-toggle");
 const menuToggle = document.querySelector(".menu-toggle");
 const topnav = document.querySelector(".topnav");
-const menuOverlay = document.querySelector(".menu-overlay");
 const slides = Array.from(document.querySelectorAll(".slide"));
 const dots = Array.from(document.querySelectorAll(".dot"));
 const studentForm = document.querySelector(".student-form");
@@ -13,10 +12,37 @@ const loginDialog = document.querySelector(".login-dialog");
 const loginForm = document.querySelector(".login-form");
 const dialogClose = document.querySelector(".dialog-close");
 const loginMessage = document.querySelector(".login-message");
+const loginEmailInput = document.querySelector("#login-email");
+const loginPasswordInput = document.querySelector("#login-password");
+const loginSubmitBtn = document.querySelector(".login-submit");
+const hintEmail = document.querySelector(".hint-email");
+const roleTabs = Array.from(document.querySelectorAll(".role-tab"));
 
 let language = "th";
 let activeSlide = 0;
-let isTeacherMode = false;
+let currentRole = null;
+let selectedRole = "teacher";
+
+const roleConfig = {
+  teacher: {
+    email: "teacher@sarasas.test",
+    logoutLabel: { th: "ออกจากระบบ (ครู)", en: "Logout (Teacher)" },
+    submitLabel: "Login เข้า Teacher Panel",
+    bodyClass: "is-teacher"
+  },
+  student: {
+    email: "student@sarasas.test",
+    logoutLabel: { th: "ออกจากระบบ (นักเรียน)", en: "Logout (Student)" },
+    submitLabel: "Login เข้า Student Portal",
+    bodyClass: "is-student"
+  },
+  parent: {
+    email: "parent@sarasas.test",
+    logoutLabel: { th: "ออกจากระบบ (ผู้ปกครอง)", en: "Logout (Parent)" },
+    submitLabel: "Login เข้า Parent Portal",
+    bodyClass: "is-parent"
+  }
+};
 
 const students = {
   SR001: {
@@ -39,7 +65,7 @@ function applyLanguage(nextLanguage) {
   translations.forEach((node) => {
     node.textContent = node.dataset[language];
   });
-  if (studentInput.value.trim()) {
+  if (studentInput && studentInput.value.trim()) {
     renderStudent(studentInput.value.trim().toUpperCase());
   }
   updateLoginLabel();
@@ -47,12 +73,8 @@ function applyLanguage(nextLanguage) {
 
 function showSlide(index) {
   activeSlide = index;
-  slides.forEach((slide, slideIndex) => {
-    slide.classList.toggle("active", slideIndex === activeSlide);
-  });
-  dots.forEach((dot, dotIndex) => {
-    dot.classList.toggle("active", dotIndex === activeSlide);
-  });
+  slides.forEach((slide, i) => slide.classList.toggle("active", i === activeSlide));
+  dots.forEach((dot, i) => dot.classList.toggle("active", i === activeSlide));
 }
 
 function renderStudent(studentId) {
@@ -64,11 +86,9 @@ function renderStudent(studentId) {
     studentResult.innerHTML = `<p class="student-error">${message}</p>`;
     return;
   }
-
   const labels = language === "th"
     ? ["ชื่อ", "ระดับชั้น", "สถานะ", "ตารางเรียน"]
     : ["Name", "Grade", "Status", "Schedule"];
-
   studentResult.innerHTML = `
     <div class="student-card">
       <div><span>${labels[0]}</span><strong>${student.name}</strong></div>
@@ -81,15 +101,28 @@ function renderStudent(studentId) {
 
 function updateLoginLabel() {
   if (!loginToggle) return;
-  loginToggle.textContent = isTeacherMode
-    ? (language === "th" ? "ออกจากระบบ" : "Logout")
-    : "Login";
+  if (currentRole) {
+    const cfg = roleConfig[currentRole];
+    loginToggle.textContent = cfg.logoutLabel[language] || cfg.logoutLabel.th;
+  } else {
+    loginToggle.textContent = "Login";
+  }
 }
 
-function showTeacherPanel() {
-  isTeacherMode = true;
-  document.body.classList.add("is-teacher");
-  closeMenu();
+function selectRole(role) {
+  selectedRole = role;
+  const cfg = roleConfig[role];
+  roleTabs.forEach((tab) => tab.classList.toggle("active", tab.dataset.role === role));
+  if (hintEmail) hintEmail.textContent = cfg.email;
+  if (loginEmailInput) loginEmailInput.value = cfg.email;
+  if (loginSubmitBtn) loginSubmitBtn.textContent = cfg.submitLabel;
+}
+
+function showPanel(role) {
+  currentRole = role;
+  ["is-teacher", "is-student", "is-parent"].forEach((cls) => document.body.classList.remove(cls));
+  document.body.classList.add(roleConfig[role].bodyClass);
+  topnav.classList.remove("open");
   updateLoginLabel();
   loginDialog.close();
   history.replaceState(null, "", window.location.pathname + window.location.search);
@@ -97,28 +130,12 @@ function showTeacherPanel() {
 }
 
 function showPublicSite() {
-  isTeacherMode = false;
-  document.body.classList.remove("is-teacher");
-  closeMenu();
+  currentRole = null;
+  ["is-teacher", "is-student", "is-parent"].forEach((cls) => document.body.classList.remove(cls));
+  topnav.classList.remove("open");
   updateLoginLabel();
   history.replaceState(null, "", window.location.pathname + window.location.search);
   window.scrollTo({ top: 0, behavior: "auto" });
-}
-
-function openMenu() {
-  topnav.classList.add("open");
-  menuToggle.classList.add("open");
-  menuOverlay.classList.add("open");
-  document.body.classList.add("menu-open");
-  menuToggle.setAttribute("aria-expanded", "true");
-}
-
-function closeMenu() {
-  topnav.classList.remove("open");
-  menuToggle.classList.remove("open");
-  menuOverlay.classList.remove("open");
-  document.body.classList.remove("menu-open");
-  menuToggle.setAttribute("aria-expanded", "false");
 }
 
 languageToggle.addEventListener("click", () => {
@@ -126,53 +143,44 @@ languageToggle.addEventListener("click", () => {
 });
 
 menuToggle.addEventListener("click", () => {
-  if (topnav.classList.contains("open")) {
-    closeMenu();
-    return;
-  }
-  openMenu();
-});
-
-menuOverlay.addEventListener("click", closeMenu);
-
-topnav.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", closeMenu);
+  topnav.classList.toggle("open");
 });
 
 dots.forEach((dot) => {
-  dot.addEventListener("click", () => {
-    showSlide(Number(dot.dataset.targetSlide));
-  });
+  dot.addEventListener("click", () => showSlide(Number(dot.dataset.targetSlide)));
 });
 
-studentForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  renderStudent(studentInput.value.trim().toUpperCase());
-});
+if (studentForm) {
+  studentForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    renderStudent(studentInput.value.trim().toUpperCase());
+  });
+}
 
 loginToggle.addEventListener("click", () => {
-  if (isTeacherMode) {
+  if (currentRole) {
     showPublicSite();
     return;
   }
-
-  closeMenu();
   loginMessage.textContent = "";
+  selectRole("teacher");
   loginDialog.showModal();
 });
 
-dialogClose.addEventListener("click", () => {
-  loginDialog.close();
+dialogClose.addEventListener("click", () => loginDialog.close());
+
+roleTabs.forEach((tab) => {
+  tab.addEventListener("click", () => selectRole(tab.dataset.role));
 });
 
 loginForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  const formData = new FormData(loginForm);
-  const email = formData.get("teacher-email");
-  const password = formData.get("teacher-password");
+  const email = loginEmailInput.value.trim();
+  const password = loginPasswordInput.value;
+  const cfg = roleConfig[selectedRole];
 
-  if (email === "teacher@sarasas.test" && password === "1234") {
-    showTeacherPanel();
+  if (email === cfg.email && password === "1234") {
+    showPanel(selectedRole);
     return;
   }
 
@@ -185,30 +193,40 @@ setInterval(() => {
   showSlide((activeSlide + 1) % slides.length);
 }, 6500);
 
-//ปุ่มความเป็นมา
-const historyLink = document.querySelector('.history-link');
-const historyImageDialog = document.getElementById('historyImageDialog');
-const closeImage = document.querySelector('.close-image');
+// Bus tracker ETA countdown
+(function initBusTracker() {
+  const etaMinutesEls = document.querySelectorAll(".eta-minutes");
+  const etaClockEls = document.querySelectorAll(".eta-clock");
+  const etaArrivalEls = document.querySelectorAll(".eta-arrival");
+  const lastUpdateEls = document.querySelectorAll(".last-update");
+  if (!etaMinutesEls.length) return;
 
-historyLink.addEventListener('click', (e) => {
-  e.preventDefault(); // กันไม่ให้เลื่อนไป #history
-  historyImageDialog.showModal();
-});
+  let remaining = 12;
 
-closeImage.addEventListener('click', () => {
-  historyImageDialog.close();
-});
-
-historyImageDialog.addEventListener('click', (e) => {
-  const rect = historyImageDialog.getBoundingClientRect();
-
-  const isInside =
-    rect.top <= e.clientY &&
-    e.clientY <= rect.top + rect.height &&
-    rect.left <= e.clientX &&
-    e.clientX <= rect.left + rect.width;
-
-  if (!isInside) {
-    historyImageDialog.close();
+  function pad(n) {
+    return String(n).padStart(2, "0");
   }
-});
+
+  function tick() {
+    if (remaining > 0) remaining--;
+
+    const now = new Date();
+    const arrival = new Date(now.getTime() + remaining * 60000);
+    const arrivalStr = pad(arrival.getHours()) + ":" + pad(arrival.getMinutes());
+    const nowStr = pad(now.getHours()) + ":" + pad(now.getMinutes());
+
+    etaMinutesEls.forEach((el) => {
+      el.textContent = remaining > 0 ? remaining : "ถึงแล้ว!";
+    });
+    etaClockEls.forEach((el) => {
+      el.textContent = remaining > 0
+        ? "ประมาณ " + arrivalStr + " น."
+        : "รถถึงจุดรับของคุณแล้ว 🎉";
+    });
+    etaArrivalEls.forEach((el) => { el.textContent = arrivalStr; });
+    lastUpdateEls.forEach((el) => { el.textContent = "อัปเดต " + nowStr + " น."; });
+  }
+
+  tick();
+  setInterval(tick, 60000);
+}());
