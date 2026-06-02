@@ -1,11 +1,10 @@
 import { useState } from 'react'
-import { Modal, ModalContent, Input, Button } from '@heroui/react'
 import { ROLES } from '../data'
 
 const META = {
-  teacher: { icon: '👨‍🏫', from: '#0f6b57', to: '#1a9970', hint: '#dcfce7', hintText: '#166534' },
-  student: { icon: '👨‍🎓', from: '#2b70b8', to: '#3d8fd4', hint: '#dbeafe', hintText: '#1e40af' },
-  parent:  { icon: '👨‍👩‍👦', from: '#b86e10', to: '#d9952a', hint: '#fef3c7', hintText: '#92400e' },
+  teacher: { icon: '👨‍🏫', label: 'ครู',       from: '#0f6b57', to: '#1a9970' },
+  student: { icon: '👨‍🎓', label: 'นักเรียน',  from: '#2b70b8', to: '#3d8fd4' },
+  parent:  { icon: '👨‍👩‍👦', label: 'ผู้ปกครอง', from: '#b86e10', to: '#d9952a' },
 }
 
 export default function LoginModal({ isOpen, onLogin, onClose }) {
@@ -15,6 +14,8 @@ export default function LoginModal({ isOpen, onLogin, onClose }) {
   const [error, setError]       = useState('')
   const [loading, setLoading]   = useState(false)
 
+  if (!isOpen) return null
+
   function pickRole(key) {
     setRole(key)
     setEmail(ROLES[key].email)
@@ -22,6 +23,7 @@ export default function LoginModal({ isOpen, onLogin, onClose }) {
   }
 
   async function submit() {
+    setError('')
     setLoading(true)
     await new Promise((r) => setTimeout(r, 350))
     setLoading(false)
@@ -35,56 +37,58 @@ export default function LoginModal({ isOpen, onLogin, onClose }) {
   const m = META[role]
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      placement="center"
-      size="sm"
-      isDismissable={false}
-      hideCloseButton
-      classNames={{ base: 'rounded-2xl overflow-hidden', wrapper: 'p-4 items-center' }}
-      scrollBehavior="inside"
+    /* Backdrop */
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ backgroundColor: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(4px)' }}
+      onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <ModalContent>
+      {/* Card */}
+      <div className="w-full max-w-sm bg-white rounded-3xl shadow-2xl overflow-hidden">
 
         {/* ── Header ── */}
         <div
-          className="px-6 py-7 text-white text-center relative overflow-hidden"
-          style={{ background: `linear-gradient(135deg, ${m.from}, ${m.to})` }}
+          className="relative px-6 py-8 text-white text-center overflow-hidden"
+          style={{ background: `linear-gradient(135deg, ${m.from} 0%, ${m.to} 100%)` }}
         >
-          <div className="absolute -top-5 -right-5 w-20 h-20 rounded-full bg-white/10 pointer-events-none" />
-          <div className="w-14 h-14 rounded-2xl bg-white/20 border border-white/30 mx-auto flex items-center justify-center text-2xl font-black mb-3">
-            S
+          <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full"
+            style={{ background: 'rgba(255,255,255,0.08)' }} />
+          <div className="relative">
+            <div
+              className="w-14 h-14 rounded-2xl mx-auto flex items-center justify-center text-2xl font-black mb-3"
+              style={{ background: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.3)' }}
+            >
+              S
+            </div>
+            <p className="font-extrabold text-lg leading-tight">โรงเรียนสารสาสน์</p>
+            <p className="text-sm mt-0.5" style={{ color: 'rgba(255,255,255,0.65)' }}>Sarasas School Portal</p>
           </div>
-          <p className="font-extrabold text-lg">โรงเรียนสารสาสน์</p>
-          <p className="text-white/65 text-sm">Sarasas School Portal</p>
         </div>
 
         {/* ── Body ── */}
-        <div className="px-5 py-5 space-y-4">
+        <div className="px-6 py-5 space-y-4">
 
           {/* Role selector */}
           <div>
-            <p className="text-[10px] font-bold text-gray-400 tracking-widest uppercase text-center mb-2">
+            <p className="text-center text-xs font-bold text-gray-400 tracking-widest uppercase mb-3">
               เลือกบทบาท
             </p>
             <div className="grid grid-cols-3 gap-2">
-              {Object.entries(ROLES).map(([key, { label }]) => {
-                const mk = META[key]
+              {Object.entries(META).map(([key, { icon, label, from, to }]) => {
                 const active = role === key
                 return (
                   <button
                     key={key}
+                    type="button"
                     onClick={() => pickRole(key)}
-                    className="flex flex-col items-center gap-1 py-3 rounded-xl border-2 transition-all duration-200"
-                    style={
-                      active
-                        ? { background: `linear-gradient(135deg, ${mk.from}, ${mk.to})`, borderColor: 'transparent', color: 'white', transform: 'scale(1.04)' }
-                        : { background: '#f9fafb', borderColor: '#e5e7eb', color: '#6b7280' }
+                    className="flex flex-col items-center gap-1.5 py-3 rounded-xl border-2 transition-all duration-150"
+                    style={active
+                      ? { background: `linear-gradient(135deg, ${from}, ${to})`, borderColor: 'transparent', color: 'white', transform: 'scale(1.04)' }
+                      : { background: '#f9fafb', borderColor: '#e5e7eb', color: '#6b7280' }
                     }
                   >
-                    <span className="text-xl leading-none">{mk.icon}</span>
-                    <span className="text-[11px] font-semibold">{label}</span>
+                    <span className="text-xl leading-none">{icon}</span>
+                    <span className="text-xs font-semibold leading-none">{label}</span>
                   </button>
                 )
               })}
@@ -93,59 +97,82 @@ export default function LoginModal({ isOpen, onLogin, onClose }) {
 
           {/* Credential hint */}
           <div
-            className="text-xs rounded-xl px-3 py-2.5 leading-relaxed"
-            style={{ background: m.hint, color: m.hintText }}
+            className="rounded-xl px-3 py-2.5 text-xs leading-relaxed"
+            style={{ background: '#f0fdf4', color: '#166534', border: '1px solid #bbf7d0' }}
           >
-            💡 บัญชีทดสอบ: <span className="font-bold font-mono">{ROLES[role].email}</span>
+            💡 บัญชีทดสอบ:{' '}
+            <span className="font-bold font-mono">{ROLES[role].email}</span>
             {' '}/ <span className="font-bold font-mono">1234</span>
           </div>
 
-          {/* Inputs */}
-          <Input
-            label="Email"
-            type="email"
-            value={email}
-            onValueChange={(v) => { setEmail(v); setError('') }}
-            variant="bordered"
-            labelPlacement="outside"
-            placeholder="email@example.com"
-            classNames={{ label: 'text-xs font-semibold', inputWrapper: 'rounded-xl' }}
-          />
-          <Input
-            label="Password"
-            type="password"
-            value={password}
-            onValueChange={(v) => { setPassword(v); setError('') }}
-            variant="bordered"
-            labelPlacement="outside"
-            placeholder="••••••"
-            classNames={{ label: 'text-xs font-semibold', inputWrapper: 'rounded-xl' }}
-            onKeyDown={(e) => e.key === 'Enter' && submit()}
-          />
+          {/* Email */}
+          <div className="space-y-1.5">
+            <label className="block text-xs font-semibold text-gray-600">
+              Email
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => { setEmail(e.target.value); setError('') }}
+              placeholder="email@example.com"
+              className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-200 text-sm text-gray-800 outline-none transition-colors"
+              style={{ fontFamily: 'inherit' }}
+              onFocus={(e) => e.target.style.borderColor = m.from}
+              onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+            />
+          </div>
 
+          {/* Password */}
+          <div className="space-y-1.5">
+            <label className="block text-xs font-semibold text-gray-600">
+              Password
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => { setPassword(e.target.value); setError('') }}
+              placeholder="••••••"
+              className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-200 text-sm text-gray-800 outline-none transition-colors"
+              style={{ fontFamily: 'inherit' }}
+              onFocus={(e) => e.target.style.borderColor = m.from}
+              onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+              onKeyDown={(e) => e.key === 'Enter' && submit()}
+            />
+          </div>
+
+          {/* Error */}
           {error && (
-            <p className="text-red-500 text-xs bg-red-50 rounded-xl px-3 py-2">⚠️ {error}</p>
+            <div className="rounded-xl px-3 py-2.5 text-xs"
+              style={{ background: '#fef2f2', color: '#991b1b', border: '1px solid #fecaca' }}>
+              ⚠️ {error}
+            </div>
           )}
 
-          {/* Buttons */}
+          {/* Login button */}
           <button
+            type="button"
             onClick={submit}
             disabled={loading}
-            className="w-full py-3 rounded-xl text-white font-bold text-sm transition-opacity disabled:opacity-70"
-            style={{ background: `linear-gradient(135deg, ${m.from}, ${m.to})` }}
+            className="w-full py-3 rounded-xl text-white font-bold text-sm transition-opacity"
+            style={{
+              background: `linear-gradient(135deg, ${m.from}, ${m.to})`,
+              opacity: loading ? 0.7 : 1,
+              cursor: loading ? 'not-allowed' : 'pointer',
+            }}
           >
-            {loading ? 'กำลังเข้าสู่ระบบ…' : `${m.icon} เข้าสู่ระบบ ${ROLES[role].label}`}
+            {loading ? 'กำลังเข้าสู่ระบบ…' : `${m.icon} เข้าสู่ระบบ ${m.label}`}
           </button>
 
+          {/* Cancel */}
           <button
+            type="button"
             onClick={onClose}
-            className="w-full py-2 rounded-xl text-gray-400 text-sm hover:bg-gray-50 transition-colors"
+            className="w-full py-2 text-sm text-gray-400 hover:text-gray-600 transition-colors"
           >
             ยกเลิก
           </button>
         </div>
-
-      </ModalContent>
-    </Modal>
+      </div>
+    </div>
   )
 }
