@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { Progress, Chip, Button } from '@heroui/react'
 import Shell from '../components/Shell'
 import { ROLES, GRADES, PARENT_MESSAGES, BUS_STOPS, FEES } from '../data'
+import { useLang } from '../context/LanguageContext'
+import { t } from '../i18n'
 
 const roleInfo = ROLES.parent
 
@@ -55,20 +57,6 @@ function Sidebar() {
 
 const cs = '0 4px 24px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04)'
 
-const STATS = [
-  { label: 'GPA บุตรหลาน', value: '3.7', unit: '', icon: '⭐', from: '#059669', to: '#10b981', glow: 'rgba(5,150,105,0.22)' },
-  { label: 'มาเรียน', value: '18', unit: '/19', icon: '📅', from: '#b86e10', to: '#d9952a', glow: 'rgba(184,110,16,0.22)' },
-  { label: 'ข้อความใหม่', value: '2', unit: '', icon: '💬', from: '#2563eb', to: '#3b82f6', glow: 'rgba(37,99,235,0.22)' },
-  { label: 'ค้างชำระ', value: '1', unit: 'รายการ', icon: '💳', from: '#dc2626', to: '#ef4444', glow: 'rgba(220,38,38,0.22)' },
-]
-
-const QUICK = [
-  { label: 'ติดต่อครู', icon: '📞', from: '#b86e10', to: '#d9952a', glow: 'rgba(184,110,16,0.38)' },
-  { label: 'ดูผลการเรียน', icon: '📊', from: '#059669', to: '#10b981', glow: 'rgba(5,150,105,0.38)' },
-  { label: 'ชำระค่าธรรมเนียม', icon: '💳', from: '#dc2626', to: '#ef4444', glow: 'rgba(220,38,38,0.38)' },
-  { label: 'นัดพบครู', icon: '📅', from: '#7c3aed', to: '#8b5cf6', glow: 'rgba(124,58,237,0.38)' },
-]
-
 function gradeColor(grade) {
   if (grade === 'A') return 'success'
   if (grade.startsWith('B')) return 'primary'
@@ -91,6 +79,7 @@ function gradeStyle(grade) {
 }
 
 function BusTracker() {
+  const { lang } = useLang()
   const [eta, setEta] = useState(12)
 
   useEffect(() => {
@@ -107,7 +96,7 @@ function BusTracker() {
       <div className="px-6 pt-5 pb-0 flex items-start justify-between">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
-            <h2 className="text-base font-bold text-gray-900">ติดตามรถโรงเรียนสด</h2>
+            <h2 className="text-base font-bold text-gray-900">{t('busTrackerTitle', lang)}</h2>
             <Chip size="sm" color="danger" variant="flat" className="animate-pulse font-bold">● LIVE</Chip>
           </div>
           <p className="text-xs text-gray-400 mt-0.5">รถสาย 3 · ทะเบียน 40-1234 กท · คนขับ สมชาย ใจดี</p>
@@ -187,6 +176,22 @@ function BusTracker() {
 }
 
 export default function ParentPage({ onLogout }) {
+  const { lang } = useLang()
+
+  const STATS = [
+    { label: t('statGPAP', lang), value: '3.7', unit: '', icon: '⭐', from: '#059669', to: '#10b981', glow: 'rgba(5,150,105,0.22)' },
+    { label: t('statAttP', lang), value: '18', unit: '/19', icon: '📅', from: '#b86e10', to: '#d9952a', glow: 'rgba(184,110,16,0.22)' },
+    { label: t('statMsgP', lang), value: '2', unit: '', icon: '💬', from: '#2563eb', to: '#3b82f6', glow: 'rgba(37,99,235,0.22)' },
+    { label: t('statFeeP', lang), value: '1', unit: lang === 'th' ? 'รายการ' : 'item', icon: '💳', from: '#dc2626', to: '#ef4444', glow: 'rgba(220,38,38,0.22)' },
+  ]
+
+  const QUICK = [
+    { label: t('quickContactT', lang), icon: '📞', from: '#b86e10', to: '#d9952a', glow: 'rgba(184,110,16,0.38)' },
+    { label: t('quickViewGrades', lang), icon: '📊', from: '#059669', to: '#10b981', glow: 'rgba(5,150,105,0.38)' },
+    { label: t('quickPayFee', lang), icon: '💳', from: '#dc2626', to: '#ef4444', glow: 'rgba(220,38,38,0.38)' },
+    { label: t('quickAppointment', lang), icon: '📅', from: '#7c3aed', to: '#8b5cf6', glow: 'rgba(124,58,237,0.38)' },
+  ]
+
   return (
     <Shell roleInfo={roleInfo} onLogout={onLogout} sidebar={<Sidebar />}>
       <div className="space-y-4">
@@ -229,16 +234,16 @@ export default function ParentPage({ onLogout }) {
                 style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.2)' }}>
                 👨‍👩‍👦 Parent Portal
               </div>
-              <h1 className="text-2xl font-black leading-tight">สวัสดี คุณวิไล 👋</h1>
+              <h1 className="text-2xl font-black leading-tight">{t('parentHeroTitle', lang)}</h1>
               <p className="mt-1.5 text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.8)' }}>
-                กานต์พิชชา มาเรียน 18/19 วัน · GPA 3.7 · ข้อความใหม่จากครู 2 รายการ
+                {t('parentHeroDesc', lang)}
               </p>
             </div>
             <div className="hidden sm:block text-right shrink-0 ml-6 p-4 rounded-2xl"
               style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.18)', backdropFilter: 'blur(8px)' }}>
-              <p className="text-xs font-medium" style={{ color: 'rgba(255,255,255,0.65)' }}>บุตรหลาน</p>
-              <p className="font-black text-xl">กานต์พิชชา</p>
-              <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.7)' }}>ป.6/1 · รหัส SR001</p>
+              <p className="text-xs font-medium" style={{ color: 'rgba(255,255,255,0.65)' }}>{t('childLabel', lang)}</p>
+              <p className="font-black text-xl">{t('childName', lang)}</p>
+              <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.7)' }}>{t('childInfo', lang)}</p>
             </div>
           </div>
         </div>
@@ -246,8 +251,8 @@ export default function ParentPage({ onLogout }) {
         {/* Quick Actions */}
         <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
           <div className="px-6 pt-5 pb-0">
-            <h2 className="text-base font-bold text-gray-900">Quick Actions</h2>
-            <p className="text-xs text-gray-400 mt-0.5">จัดการทุกอย่างได้ในคลิกเดียว</p>
+            <h2 className="text-base font-bold text-gray-900">{t('quickActions', lang)}</h2>
+            <p className="text-xs text-gray-400 mt-0.5">{t('quickActionsSub', lang)}</p>
           </div>
           <div className="h-px bg-gray-100 mx-6 mt-4" />
           <div className="p-5">
@@ -270,9 +275,9 @@ export default function ParentPage({ onLogout }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
             <div className="px-6 pt-5 pb-0 flex items-center justify-between">
-              <h2 className="text-base font-bold text-gray-900">การมาเรียนสัปดาห์นี้</h2>
+              <h2 className="text-base font-bold text-gray-900">{t('weeklyAttendance', lang)}</h2>
               <button className="text-xs font-bold px-3 py-1.5 rounded-lg" style={{ background: '#fffbeb', color: '#b86e10' }}>
-                ดูประวัติ →
+                {t('viewHistoryBtn', lang)}
               </button>
             </div>
             <div className="h-px bg-gray-100 mx-6 mt-4" />
@@ -316,9 +321,9 @@ export default function ParentPage({ onLogout }) {
 
           <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
             <div className="px-6 pt-5 pb-0 flex items-center justify-between">
-              <h2 className="text-base font-bold text-gray-900">ข้อความจากครู</h2>
+              <h2 className="text-base font-bold text-gray-900">{t('teacherMessages', lang)}</h2>
               <button className="text-xs font-bold px-3 py-1.5 rounded-lg" style={{ background: '#fffbeb', color: '#b86e10' }}>
-                ติดต่อครู →
+                {t('contactTeacher', lang)}
               </button>
             </div>
             <div className="h-px bg-gray-100 mx-6 mt-4" />
@@ -342,9 +347,9 @@ export default function ParentPage({ onLogout }) {
         {/* Grades */}
         <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
           <div className="px-6 pt-5 pb-0 flex items-center justify-between">
-            <h2 className="text-base font-bold text-gray-900">ผลการเรียน · กานต์พิชชา</h2>
+            <h2 className="text-base font-bold text-gray-900">{t('gradesChild', lang)}</h2>
             <button className="text-xs font-bold px-3 py-1.5 rounded-lg" style={{ background: '#fffbeb', color: '#b86e10' }}>
-              รายงานเต็ม →
+              {t('fullReportBtn', lang)}
             </button>
           </div>
           <div className="h-px bg-gray-100 mx-6 mt-4" />
@@ -376,8 +381,8 @@ export default function ParentPage({ onLogout }) {
               </div>
               <div className="w-px h-12 bg-amber-200" />
               <div>
-                <p className="text-sm font-bold" style={{ color: '#92400e' }}>ผลการเรียนดีเยี่ยม</p>
-                <p className="text-xs text-gray-400 mt-0.5">ภาคเรียนที่ 1 ปีการศึกษา 2569</p>
+                <p className="text-sm font-bold" style={{ color: '#92400e' }}>{t('excellentResult', lang)}</p>
+                <p className="text-xs text-gray-400 mt-0.5">{t('semesterLabel', lang)}</p>
               </div>
             </div>
           </div>
@@ -386,9 +391,9 @@ export default function ParentPage({ onLogout }) {
         {/* Fees */}
         <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
           <div className="px-6 pt-5 pb-0 flex items-center justify-between">
-            <h2 className="text-base font-bold text-gray-900">ค่าธรรมเนียมการศึกษา</h2>
+            <h2 className="text-base font-bold text-gray-900">{t('feesSection', lang)}</h2>
             <button className="text-xs font-bold px-3 py-1.5 rounded-lg" style={{ background: '#fffbeb', color: '#b86e10' }}>
-              ประวัติชำระ →
+              {t('payHistoryBtn', lang)}
             </button>
           </div>
           <div className="h-px bg-gray-100 mx-6 mt-4" />
@@ -413,7 +418,7 @@ export default function ParentPage({ onLogout }) {
                       background: status === 'paid' ? '#dcfce7' : '#fee2e2',
                       color: status === 'paid' ? '#166534' : '#c53030',
                     }}>
-                    {status === 'paid' ? 'ชำระแล้ว' : 'ค้างชำระ'}
+                    {status === 'paid' ? t('feePaid', lang) : t('feePending', lang)}
                   </span>
                 </div>
               ))}
