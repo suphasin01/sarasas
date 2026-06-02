@@ -1,6 +1,3 @@
-import {
-  Card, CardBody, CardHeader, Chip, Button, Divider,
-} from '@heroui/react'
 import Shell from '../components/Shell'
 import { ROLES, TEACHER_SCHEDULE, TEACHER_TASKS } from '../data'
 
@@ -39,18 +36,29 @@ const MENU = [
 
 function Sidebar() {
   return (
-    <div className="p-4 space-y-5">
-      {MENU.map(({ section, items }) => (
+    <div className="px-3 py-2 space-y-4">
+      {MENU.map(({ section, items }, si) => (
         <div key={section}>
-          <p className="text-xs font-bold text-default-400 mb-2 px-2">{section}</p>
+          <p className="text-[10px] font-bold text-gray-400 tracking-widest uppercase px-2 mb-1.5">{section}</p>
           <ul className="space-y-0.5">
-            {items.map((label) => (
-              <li key={label}>
-                <button className="w-full text-left px-3 py-2 rounded-lg text-sm text-default-700 hover:bg-success-50 hover:text-success-700 transition-colors">
-                  {label}
-                </button>
-              </li>
-            ))}
+            {items.map((label, i) => {
+              const active = si === 0 && i === 0
+              return (
+                <li key={label}>
+                  <button
+                    className="w-full text-left px-3 py-2 rounded-xl text-sm font-medium transition-all duration-150"
+                    style={active
+                      ? { background: 'linear-gradient(90deg, rgba(15,107,87,0.12), rgba(26,153,112,0.04))', color: '#0f6b57', borderLeft: '3px solid #0f6b57', paddingLeft: '9px' }
+                      : { color: '#6b7280' }
+                    }
+                    onMouseEnter={(e) => { if (!active) { e.currentTarget.style.background = '#f3f4f6'; e.currentTarget.style.color = '#111827' } }}
+                    onMouseLeave={(e) => { if (!active) { e.currentTarget.style.background = ''; e.currentTarget.style.color = '#6b7280' } }}
+                  >
+                    {label}
+                  </button>
+                </li>
+              )
+            })}
           </ul>
         </div>
       ))}
@@ -58,183 +66,262 @@ function Sidebar() {
   )
 }
 
+const cs = '0 4px 24px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04)'
+
+const STATS = [
+  { label: 'นักเรียนทั้งหมด', value: '142', unit: 'คน', icon: '👥', from: '#0f6b57', to: '#1a9970', glow: 'rgba(15,107,87,0.22)' },
+  { label: 'คาบสอนวันนี้', value: '4', unit: 'คาบ', icon: '📚', from: '#2563eb', to: '#3b82f6', glow: 'rgba(37,99,235,0.22)' },
+  { label: 'งานรอตรวจ', value: '18', unit: 'ชิ้น', icon: '📋', from: '#d97706', to: '#f59e0b', glow: 'rgba(217,119,6,0.22)' },
+  { label: 'คะแนนเฉลี่ย', value: '3.4', unit: 'GPA', icon: '🏆', from: '#7c3aed', to: '#8b5cf6', glow: 'rgba(124,58,237,0.22)' },
+]
+
+const QUICK = [
+  { label: 'เช็กชื่อด่วน', icon: '✅', from: '#0f6b57', to: '#1a9970', glow: 'rgba(15,107,87,0.38)' },
+  { label: 'เพิ่มการบ้าน', icon: '📝', from: '#2563eb', to: '#3b82f6', glow: 'rgba(37,99,235,0.38)' },
+  { label: 'เพิ่มคะแนน', icon: '⭐', from: '#7c3aed', to: '#8b5cf6', glow: 'rgba(124,58,237,0.38)' },
+  { label: 'ส่งประกาศ', icon: '📢', from: '#d97706', to: '#f59e0b', glow: 'rgba(217,119,6,0.38)' },
+]
+
+const NOTIF_COLORS = { danger: '#dc2626', warning: '#d97706', primary: '#2563eb', secondary: '#7c3aed' }
+
 export default function TeacherPage({ onLogout }) {
   return (
     <Shell roleInfo={roleInfo} onLogout={onLogout} sidebar={<Sidebar />}>
-      <div className="space-y-6">
+      <div className="space-y-5">
+
+        {/* Stat cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {STATS.map(({ label, value, unit, icon, from, to, glow }) => (
+            <div
+              key={label}
+              className="bg-white rounded-2xl p-4 relative overflow-hidden hover:-translate-y-0.5 transition-transform duration-200 cursor-default"
+              style={{ boxShadow: cs }}>
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center text-base mb-3 shrink-0"
+                style={{ background: `linear-gradient(135deg, ${from}, ${to})`, boxShadow: `0 4px 12px ${glow}` }}>
+                {icon}
+              </div>
+              <p className="text-2xl font-black text-gray-900 leading-none">
+                {value}<span className="text-sm font-semibold text-gray-400 ml-1">{unit}</span>
+              </p>
+              <p className="text-xs text-gray-500 font-medium mt-1">{label}</p>
+              <div className="absolute -right-3 -bottom-3 w-14 h-14 rounded-full bg-black opacity-[0.025]" />
+            </div>
+          ))}
+        </div>
+
         {/* Hero */}
-        <Card className="bg-gradient-to-r from-[#0f6b57] to-[#1a8a6f] text-white shadow-lg">
-          <CardBody className="flex flex-row items-center justify-between p-6">
+        <div
+          className="rounded-2xl text-white relative overflow-hidden"
+          style={{
+            background: 'linear-gradient(135deg, #0a5c4a 0%, #0f6b57 45%, #1a8a6f 100%)',
+            boxShadow: '0 8px 32px rgba(15,107,87,0.35), 0 2px 8px rgba(0,0,0,0.1)',
+          }}>
+          <div className="absolute inset-0 opacity-[0.06]"
+            style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+          <div className="absolute -top-14 -right-14 w-52 h-52 rounded-full" style={{ background: 'rgba(255,255,255,0.07)' }} />
+          <div className="absolute -bottom-10 right-36 w-36 h-36 rounded-full" style={{ background: 'rgba(255,255,255,0.05)' }} />
+          <div className="relative flex flex-row items-center justify-between p-6">
             <div>
-              <p className="text-green-200 text-sm font-medium">Teacher Panel</p>
-              <h1 className="text-2xl font-bold mt-1">หน้าหลักสำหรับคุณครู</h1>
-              <p className="text-green-100 mt-1 text-sm leading-relaxed">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-3"
+                style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.2)' }}>
+                🟢 Teacher Panel
+              </div>
+              <h1 className="text-2xl font-black leading-tight">หน้าหลักสำหรับคุณครู</h1>
+              <p className="mt-1.5 text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.8)' }}>
                 จัดตารางสอน เช็กชื่อ ตรวจงาน ส่งประกาศ และดูแจ้งเตือนสำคัญได้จากหน้าเดียว
               </p>
             </div>
-            <div className="hidden sm:block text-right bg-white/10 backdrop-blur-sm rounded-xl p-4 shrink-0 ml-4">
-              <p className="text-green-200 text-xs">วันนี้</p>
-              <p className="font-bold text-lg">13 พ.ค. 2026</p>
-              <p className="text-green-100 text-xs">มีสอน 4 คาบ / งานรอตรวจ 18 ชิ้น</p>
+            <div className="hidden sm:block text-right shrink-0 ml-6 p-4 rounded-2xl"
+              style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.18)', backdropFilter: 'blur(8px)' }}>
+              <p className="text-xs font-medium" style={{ color: 'rgba(255,255,255,0.65)' }}>วันนี้</p>
+              <p className="font-black text-xl">13 พ.ค. 2026</p>
+              <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.7)' }}>มีสอน 4 คาบ / งานรอตรวจ 18 ชิ้น</p>
             </div>
-          </CardBody>
-        </Card>
+          </div>
+        </div>
 
         {/* Quick Actions */}
-        <Card className="shadow-sm">
-          <CardHeader className="pb-0">
-            <div>
-              <h2 className="text-base font-semibold">Quick Actions</h2>
-              <p className="text-xs text-default-500">ลดจำนวนคลิกสำหรับงานที่ใช้บ่อย</p>
-            </div>
-          </CardHeader>
-          <Divider className="mt-3" />
-          <CardBody>
+        <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
+          <div className="px-6 pt-5 pb-0">
+            <h2 className="text-base font-bold text-gray-900">Quick Actions</h2>
+            <p className="text-xs text-gray-400 mt-0.5">ลดจำนวนคลิกสำหรับงานที่ใช้บ่อย</p>
+          </div>
+          <div className="h-px bg-gray-100 mx-6 mt-4" />
+          <div className="p-5">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {['เช็กชื่อด่วน', 'เพิ่มการบ้าน', 'เพิ่มคะแนน', 'ส่งประกาศ'].map((label) => (
-                <Button
+              {QUICK.map(({ label, icon, from, to, glow }) => (
+                <button
                   key={label}
-                  variant="bordered"
-                  color="success"
-                  className="h-16 text-sm font-medium"
-                >
-                  {label}
-                </Button>
+                  className="h-16 rounded-xl text-white text-sm font-bold flex items-center justify-center gap-2 transition-all duration-150 hover:-translate-y-0.5"
+                  style={{ background: `linear-gradient(135deg, ${from}, ${to})`, boxShadow: `0 4px 14px ${glow}` }}
+                  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = `0 6px 22px ${glow}` }}
+                  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = `0 4px 14px ${glow}` }}>
+                  <span>{icon}</span> {label}
+                </button>
               ))}
             </div>
-          </CardBody>
-        </Card>
+          </div>
+        </div>
 
         {/* Schedule + Notifications */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="shadow-sm">
-            <CardHeader className="flex justify-between items-center pb-0">
-              <h2 className="text-base font-semibold">ตารางสอนวันนี้</h2>
-              <Chip size="sm" color="success" variant="flat">4 คาบ</Chip>
-            </CardHeader>
-            <Divider className="mt-3" />
-            <CardBody>
-              <div className="space-y-4">
-                {TEACHER_SCHEDULE.map(({ time, subject, room }) => (
-                  <div key={time} className="flex items-center gap-3">
-                    <span className="text-sm font-mono text-success-600 font-bold w-12 shrink-0">
-                      {time}
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium truncate">{subject}</p>
-                      <p className="text-xs text-default-500">{room}</p>
-                    </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
+            <div className="px-6 pt-5 pb-0 flex items-center justify-between">
+              <h2 className="text-base font-bold text-gray-900">ตารางสอนวันนี้</h2>
+              <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: '#f0fdf4', color: '#166534' }}>4 คาบ</span>
+            </div>
+            <div className="h-px bg-gray-100 mx-6 mt-4" />
+            <div className="p-5 space-y-3">
+              {TEACHER_SCHEDULE.map(({ time, subject, room }) => (
+                <div key={time} className="flex items-center gap-3">
+                  <div
+                    className="w-12 h-12 rounded-xl shrink-0 flex items-center justify-center text-white text-[10px] font-black text-center leading-tight"
+                    style={{ background: 'linear-gradient(135deg, #0f6b57, #1a9970)', boxShadow: '0 3px 10px rgba(15,107,87,0.3)' }}>
+                    {time}
                   </div>
-                ))}
-              </div>
-            </CardBody>
-          </Card>
+                  <div className="flex-1 p-3 rounded-xl" style={{ background: '#f8fafc' }}>
+                    <p className="text-sm font-semibold text-gray-800">{subject}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{room}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
-          <Card className="shadow-sm">
-            <CardHeader className="pb-0">
-              <h2 className="text-base font-semibold">Notification Center</h2>
-            </CardHeader>
-            <Divider className="mt-3" />
-            <CardBody>
-              <div className="space-y-3">
-                {[
-                  { title: 'นักเรียนขาดเรียน', desc: 'ป.6/1 ขาด 2 คนในคาบเช้า', color: 'danger' },
-                  { title: 'งานยังไม่ตรวจ', desc: 'แบบฝึกหัดบทที่ 4 เหลือ 18 ชิ้น', color: 'warning' },
-                  { title: 'ผู้ปกครองส่งข้อความ', desc: 'มีข้อความใหม่ 3 รายการ', color: 'primary' },
-                  { title: 'ใกล้วันสอบ', desc: 'สอบกลางภาคอีก 9 วัน', color: 'secondary' },
-                ].map(({ title, desc, color }) => (
-                  <div key={title} className="flex items-start gap-3 p-2 rounded-lg hover:bg-default-50">
-                    <Chip size="sm" color={color} variant="flat" className="shrink-0 mt-0.5">
-                      {title}
-                    </Chip>
-                    <p className="text-xs text-default-500 leading-relaxed">{desc}</p>
+          <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
+            <div className="px-6 pt-5 pb-0">
+              <h2 className="text-base font-bold text-gray-900">Notification Center</h2>
+            </div>
+            <div className="h-px bg-gray-100 mx-6 mt-4" />
+            <div className="p-5 space-y-3">
+              {[
+                { title: 'นักเรียนขาดเรียน', desc: 'ป.6/1 ขาด 2 คนในคาบเช้า', color: 'danger', icon: '⚠️' },
+                { title: 'งานยังไม่ตรวจ', desc: 'แบบฝึกหัดบทที่ 4 เหลือ 18 ชิ้น', color: 'warning', icon: '📋' },
+                { title: 'ผู้ปกครองส่งข้อความ', desc: 'มีข้อความใหม่ 3 รายการ', color: 'primary', icon: '💬' },
+                { title: 'ใกล้วันสอบ', desc: 'สอบกลางภาคอีก 9 วัน', color: 'secondary', icon: '📅' },
+              ].map(({ title, desc, color, icon }) => (
+                <div
+                  key={title}
+                  className="flex items-start gap-3 p-3 rounded-xl"
+                  style={{
+                    background: `${NOTIF_COLORS[color]}09`,
+                    borderLeft: `3px solid ${NOTIF_COLORS[color]}`,
+                  }}>
+                  <span className="text-base shrink-0 mt-0.5">{icon}</span>
+                  <div>
+                    <p className="text-sm font-bold" style={{ color: NOTIF_COLORS[color] }}>{title}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">{desc}</p>
                   </div>
-                ))}
-              </div>
-            </CardBody>
-          </Card>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Tasks */}
-        <Card className="shadow-sm">
-          <CardHeader className="flex justify-between items-center pb-0">
-            <h2 className="text-base font-semibold">งานและการประเมิน</h2>
-            <Button size="sm" color="success" variant="light">ตรวจงาน →</Button>
-          </CardHeader>
-          <Divider className="mt-3" />
-          <CardBody>
+        <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
+          <div className="px-6 pt-5 pb-0 flex items-center justify-between">
+            <h2 className="text-base font-bold text-gray-900">งานและการประเมิน</h2>
+            <button className="text-xs font-bold px-3 py-1.5 rounded-lg" style={{ background: '#f0fdf4', color: '#0f6b57' }}>
+              ตรวจงาน →
+            </button>
+          </div>
+          <div className="h-px bg-gray-100 mx-6 mt-4" />
+          <div className="p-5">
             <div className="space-y-2">
-              <div className="grid grid-cols-3 text-xs font-semibold text-default-400 px-3 pb-1">
+              <div className="grid grid-cols-3 text-xs font-bold text-gray-400 px-3 pb-2">
                 <span>รายการ</span><span>ห้อง</span><span>สถานะ</span>
               </div>
               {TEACHER_TASKS.map(({ task, room, status, urgent }) => (
                 <div
                   key={task}
-                  className="grid grid-cols-3 items-center p-3 rounded-xl bg-default-50 hover:bg-default-100 transition-colors text-sm"
-                >
-                  <span className="font-medium">{task}</span>
-                  <span className="text-default-600 text-xs">{room}</span>
-                  <Chip size="sm" color={urgent ? 'danger' : 'success'} variant="flat">
+                  className="grid grid-cols-3 items-center p-3 rounded-xl text-sm transition-all duration-150 hover:-translate-y-px"
+                  style={{ background: urgent ? '#fff5f5' : '#f8fafc', boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.03)' }}>
+                  <span className="font-semibold text-gray-800">{task}</span>
+                  <span className="text-gray-400 text-xs">{room}</span>
+                  <span
+                    className="text-xs font-bold px-2.5 py-1 rounded-lg w-fit"
+                    style={{
+                      background: urgent ? '#fee2e2' : '#f0fdf4',
+                      color: urgent ? '#c53030' : '#166534',
+                    }}>
                     {status}
-                  </Chip>
+                  </span>
                 </div>
               ))}
             </div>
-          </CardBody>
-        </Card>
+          </div>
+        </div>
 
-        {/* Weekly schedule builder */}
-        <Card className="shadow-sm">
-          <CardHeader className="pb-0">
-            <h2 className="text-base font-semibold">จัดตารางสอนของฉัน</h2>
-          </CardHeader>
-          <Divider className="mt-3" />
-          <CardBody>
+        {/* Weekly Schedule */}
+        <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
+          <div className="px-6 pt-5 pb-0">
+            <h2 className="text-base font-bold text-gray-900">จัดตารางสอนของฉัน</h2>
+          </div>
+          <div className="h-px bg-gray-100 mx-6 mt-4" />
+          <div className="p-5">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
               {[
-                { day: 'จันทร์', subj: 'คณิต ป.6/1', time: '08:30 - 09:20' },
-                { day: 'อังคาร', subj: 'Math G7', time: '10:20 - 11:10' },
-                { day: 'พุธ', subj: 'แผนการสอน', time: '13:00 - 14:00' },
-                { day: 'พฤหัส', subj: 'ห้องเรียนออนไลน์', time: '14:15 - 15:00' },
-                { day: 'ศุกร์', subj: 'สรุปคะแนน', time: '15:00 - 15:40' },
-              ].map(({ day, subj, time }) => (
-                <div key={day} className="rounded-xl bg-success-50 p-3 text-center">
-                  <p className="text-xs text-success-600 font-semibold mb-1">{day}</p>
-                  <p className="text-sm font-bold text-success-800">{subj}</p>
-                  <p className="text-xs text-success-600 mt-1">{time}</p>
+                { day: 'จันทร์', subj: 'คณิต ป.6/1', time: '08:30–09:20', from: '#0f6b57', to: '#1a9970' },
+                { day: 'อังคาร', subj: 'Math G7', time: '10:20–11:10', from: '#2563eb', to: '#3b82f6' },
+                { day: 'พุธ', subj: 'แผนการสอน', time: '13:00–14:00', from: '#7c3aed', to: '#8b5cf6' },
+                { day: 'พฤหัส', subj: 'ออนไลน์', time: '14:15–15:00', from: '#d97706', to: '#f59e0b' },
+                { day: 'ศุกร์', subj: 'สรุปคะแนน', time: '15:00–15:40', from: '#be185d', to: '#ec4899' },
+              ].map(({ day, subj, time, from, to }) => (
+                <div
+                  key={day}
+                  className="rounded-xl p-3 text-center transition-all duration-150 hover:-translate-y-0.5"
+                  style={{
+                    background: `linear-gradient(160deg, ${from}16, ${to}0a)`,
+                    border: `1px solid ${from}28`,
+                    boxShadow: `0 2px 8px ${from}14`,
+                  }}>
+                  <p className="text-xs font-bold mb-1.5" style={{ color: from }}>{day}</p>
+                  <p className="text-sm font-black" style={{ color: from }}>{subj}</p>
+                  <p className="text-[10px] mt-1 font-medium" style={{ color: `${from}99` }}>{time}</p>
                 </div>
               ))}
             </div>
-          </CardBody>
-        </Card>
+          </div>
+        </div>
 
         {/* AI Features */}
-        <Card className="shadow-sm border-l-4 border-l-primary">
-          <CardHeader className="pb-0">
-            <div className="flex items-center gap-2">
-              <h2 className="text-base font-semibold">AI Features</h2>
-              <Chip size="sm" variant="flat" color="primary">ตัวช่วยสมัยใหม่</Chip>
-            </div>
-          </CardHeader>
-          <Divider className="mt-3" />
-          <CardBody>
+        <div
+          className="bg-white rounded-2xl overflow-hidden"
+          style={{ boxShadow: cs, borderTop: '3px solid #3b82f6' }}>
+          <div className="px-6 pt-5 pb-0 flex items-center gap-2">
+            <h2 className="text-base font-bold text-gray-900">AI Features</h2>
+            <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: '#eff6ff', color: '#1e40af' }}>
+              ตัวช่วยสมัยใหม่
+            </span>
+          </div>
+          <div className="h-px bg-gray-100 mx-6 mt-4" />
+          <div className="p-5">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {[
-                'AI ช่วยสร้างข้อสอบ',
-                'AI สรุปผลการเรียน',
-                'AI วิเคราะห์นักเรียนเสี่ยงตก',
-                'AI ช่วยเขียนแผนการสอน',
-              ].map((f) => (
-                <div
-                  key={f}
-                  className="p-3 rounded-xl bg-primary-50 text-primary-700 text-sm font-medium text-center hover:bg-primary-100 cursor-pointer transition-colors"
-                >
-                  {f}
-                </div>
+                { label: 'AI ช่วยสร้างข้อสอบ', from: '#2563eb', to: '#3b82f6', icon: '🧪' },
+                { label: 'AI สรุปผลการเรียน', from: '#059669', to: '#10b981', icon: '📊' },
+                { label: 'AI วิเคราะห์นักเรียนเสี่ยงตก', from: '#d97706', to: '#f59e0b', icon: '⚠️' },
+                { label: 'AI ช่วยเขียนแผนการสอน', from: '#7c3aed', to: '#8b5cf6', icon: '📝' },
+              ].map(({ label, from, to, icon }) => (
+                <button
+                  key={label}
+                  className="p-4 rounded-xl text-sm font-semibold text-left transition-all duration-150 hover:-translate-y-0.5"
+                  style={{
+                    background: `linear-gradient(135deg, ${from}12, ${to}08)`,
+                    border: `1px solid ${from}22`,
+                    color: from,
+                    boxShadow: `0 2px 8px ${from}10`,
+                  }}>
+                  <span className="text-xl block mb-2">{icon}</span>
+                  {label}
+                </button>
               ))}
             </div>
-          </CardBody>
-        </Card>
+          </div>
+        </div>
+
       </div>
     </Shell>
   )
