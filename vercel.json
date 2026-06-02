@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd sarasas-vercel-upload-latest && npm install && npm run build",
+  "outputDirectory": "sarasas-vercel-upload-latest/dist",
+  "cleanUrls": true,
+  "trailingSlash": false
+}
