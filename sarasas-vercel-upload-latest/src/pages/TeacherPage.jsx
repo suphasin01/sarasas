@@ -39,14 +39,14 @@ const MENU = [
 
 function Sidebar() {
   return (
-    <div className="p-4 space-y-5">
+    <div className="px-3 py-2 space-y-4">
       {MENU.map(({ section, items }) => (
         <div key={section}>
-          <p className="text-xs font-bold text-default-400 mb-2 px-2">{section}</p>
+          <p className="text-[10px] font-bold text-gray-400 tracking-widest uppercase px-2 mb-1.5">{section}</p>
           <ul className="space-y-0.5">
             {items.map((label) => (
               <li key={label}>
-                <button className="w-full text-left px-3 py-2 rounded-lg text-sm text-default-700 hover:bg-success-50 hover:text-success-700 transition-colors">
+                <button className="w-full text-left px-3 py-2 rounded-xl text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors font-medium">
                   {label}
                 </button>
               </li>
