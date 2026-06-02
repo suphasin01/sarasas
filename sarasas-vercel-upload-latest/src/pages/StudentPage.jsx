@@ -7,43 +7,60 @@ import { t } from '../i18n'
 const roleInfo = ROLES.student
 
 const MENU = [
-  { section: '🏠 ภาพรวม', items: ['หน้าหลัก', 'ตารางวันนี้', 'การแจ้งเตือน'] },
-  {
-    section: '📚 การเรียน',
-    items: ['ตารางเรียน', 'การบ้าน / งาน', 'ตารางสอบ', 'ห้องเรียนออนไลน์', 'เอกสารประกอบการสอน'],
-  },
-  {
-    section: '📊 ผลการเรียน',
-    items: ['คะแนนและเกรด', 'การมาเรียน', 'คะแนนความประพฤติ'],
-  },
-  {
-    section: '💬 สื่อสาร',
-    items: ['แชทกับครู', 'ประกาศห้องเรียน', 'ข่าวสารโรงเรียน'],
-  },
-  { section: '👤 ตัวฉัน', items: ['โปรไฟล์', 'ตั้งค่า'] },
+  { section: 'ภาพรวม', items: [
+    { label: 'หน้าหลัก', icon: '🏠' },
+    { label: 'ตารางวันนี้', icon: '📅' },
+    { label: 'การแจ้งเตือน', icon: '🔔' },
+  ]},
+  { section: 'การเรียน', items: [
+    { label: 'ตารางเรียน', icon: '🗓️' },
+    { label: 'การบ้าน / งาน', icon: '📝' },
+    { label: 'ตารางสอบ', icon: '✏️' },
+    { label: 'ห้องเรียนออนไลน์', icon: '💻' },
+    { label: 'เอกสารประกอบการสอน', icon: '📎' },
+  ]},
+  { section: 'ผลการเรียน', items: [
+    { label: 'คะแนนและเกรด', icon: '🏆' },
+    { label: 'การมาเรียน', icon: '✅' },
+    { label: 'คะแนนความประพฤติ', icon: '⭐' },
+  ]},
+  { section: 'สื่อสาร', items: [
+    { label: 'แชทกับครู', icon: '💬' },
+    { label: 'ประกาศห้องเรียน', icon: '📢' },
+    { label: 'ข่าวสารโรงเรียน', icon: '📰' },
+  ]},
+  { section: 'ตัวฉัน', items: [
+    { label: 'โปรไฟล์', icon: '👤' },
+    { label: 'ตั้งค่า', icon: '⚙️' },
+  ]},
 ]
+
+const ACTIVE_COLOR = '#2b70b8'
+const ACTIVE_BG = 'rgba(43,112,184,0.1)'
 
 function Sidebar() {
   return (
-    <div className="px-3 py-2 space-y-4">
+    <div className="px-2 space-y-0">
       {MENU.map(({ section, items }, si) => (
         <div key={section}>
-          <p className="text-[10px] font-bold text-gray-400 tracking-widest uppercase px-2 mb-1.5">{section}</p>
+          <p className="text-[9px] font-black text-gray-400 tracking-[0.12em] uppercase px-3 pt-4 pb-1.5">{section}</p>
           <ul className="space-y-0.5">
-            {items.map((label, i) => {
+            {items.map(({ label, icon }, i) => {
               const active = si === 0 && i === 0
               return (
                 <li key={label}>
                   <button
-                    className="w-full text-left px-3 py-2 rounded-xl text-sm font-medium transition-all duration-150"
+                    className="w-full text-left px-3 py-1.5 rounded-xl text-sm font-medium transition-all duration-150 flex items-center gap-2.5"
                     style={active
-                      ? { background: 'linear-gradient(90deg, rgba(43,112,184,0.12), rgba(61,143,212,0.04))', color: '#2b70b8', borderLeft: '3px solid #2b70b8', paddingLeft: '9px' }
+                      ? { background: ACTIVE_BG, color: ACTIVE_COLOR }
                       : { color: '#6b7280' }
                     }
-                    onMouseEnter={(e) => { if (!active) { e.currentTarget.style.background = '#f3f4f6'; e.currentTarget.style.color = '#111827' } }}
+                    onMouseEnter={(e) => { if (!active) { e.currentTarget.style.background = '#f3f4f6'; e.currentTarget.style.color = '#374151' } }}
                     onMouseLeave={(e) => { if (!active) { e.currentTarget.style.background = ''; e.currentTarget.style.color = '#6b7280' } }}
                   >
-                    {label}
+                    <span className="w-5 text-center shrink-0 text-base leading-none" style={{ opacity: active ? 1 : 0.6 }}>{icon}</span>
+                    <span className="truncate flex-1">{label}</span>
+                    {active && <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: ACTIVE_COLOR }} />}
                   </button>
                 </li>
               )

@@ -6,57 +6,78 @@ import { t } from '../i18n'
 const roleInfo = ROLES.teacher
 
 const MENU = [
-  {
-    section: '🏠 Dashboard',
-    items: ['ภาพรวมวันนี้', 'ตารางสอนวันนี้', 'แจ้งเตือน', 'งานที่ต้องตรวจ', 'ข่าวสารโรงเรียน'],
-  },
-  {
-    section: '📚 การสอน',
-    items: ['จัดตารางสอน', 'จัดการรายวิชา', 'แผนการสอน', 'ห้องเรียนออนไลน์', 'เอกสารประกอบการสอน'],
-  },
-  {
-    section: '👨‍🎓 นักเรียน',
-    items: ['รายชื่อนักเรียน', 'เช็กชื่อเข้าเรียน', 'พฤติกรรมนักเรียน', 'ติดต่อผู้ปกครอง'],
-  },
-  {
-    section: '📝 งานและการประเมิน',
-    items: ['สั่งการบ้าน', 'ตรวจงาน', 'สร้างข้อสอบ', 'ระบบเกรด', 'ส่งผลการเรียน'],
-  },
-  {
-    section: '💬 การสื่อสาร',
-    items: ['ประกาศในห้องเรียน', 'แชทกับนักเรียน', 'แชทผู้ปกครอง', 'ส่งข้อความกลุ่ม'],
-  },
-  {
-    section: '📊 รายงาน',
-    items: ['สถิติการเข้าเรียน', 'คะแนนเฉลี่ย', 'ผลการเรียนรายห้อง', 'Export PDF / Excel'],
-  },
-  {
-    section: '⚙️ ตั้งค่า',
-    items: ['โปรไฟล์', 'เปลี่ยนรหัสผ่าน', 'การแจ้งเตือน'],
-  },
+  { section: 'Dashboard', items: [
+    { label: 'ภาพรวมวันนี้', icon: '🏠' },
+    { label: 'ตารางสอนวันนี้', icon: '📅' },
+    { label: 'แจ้งเตือน', icon: '🔔' },
+    { label: 'งานที่ต้องตรวจ', icon: '📋' },
+    { label: 'ข่าวสารโรงเรียน', icon: '📰' },
+  ]},
+  { section: 'การสอน', items: [
+    { label: 'จัดตารางสอน', icon: '🗓️' },
+    { label: 'จัดการรายวิชา', icon: '📚' },
+    { label: 'แผนการสอน', icon: '📄' },
+    { label: 'ห้องเรียนออนไลน์', icon: '💻' },
+    { label: 'เอกสารประกอบการสอน', icon: '📎' },
+  ]},
+  { section: 'นักเรียน', items: [
+    { label: 'รายชื่อนักเรียน', icon: '👥' },
+    { label: 'เช็กชื่อเข้าเรียน', icon: '✅' },
+    { label: 'พฤติกรรมนักเรียน', icon: '⭐' },
+    { label: 'ติดต่อผู้ปกครอง', icon: '📱' },
+  ]},
+  { section: 'งานและการประเมิน', items: [
+    { label: 'สั่งการบ้าน', icon: '📝' },
+    { label: 'ตรวจงาน', icon: '🔍' },
+    { label: 'สร้างข้อสอบ', icon: '✏️' },
+    { label: 'ระบบเกรด', icon: '🏆' },
+    { label: 'ส่งผลการเรียน', icon: '📊' },
+  ]},
+  { section: 'การสื่อสาร', items: [
+    { label: 'ประกาศในห้องเรียน', icon: '📢' },
+    { label: 'แชทกับนักเรียน', icon: '💬' },
+    { label: 'แชทผู้ปกครอง', icon: '👨‍👩‍👧' },
+    { label: 'ส่งข้อความกลุ่ม', icon: '📨' },
+  ]},
+  { section: 'รายงาน', items: [
+    { label: 'สถิติการเข้าเรียน', icon: '📈' },
+    { label: 'คะแนนเฉลี่ย', icon: '📉' },
+    { label: 'ผลการเรียนรายห้อง', icon: '🏫' },
+    { label: 'Export PDF / Excel', icon: '💾' },
+  ]},
+  { section: 'ตั้งค่า', items: [
+    { label: 'โปรไฟล์', icon: '👤' },
+    { label: 'เปลี่ยนรหัสผ่าน', icon: '🔑' },
+    { label: 'การแจ้งเตือน', icon: '🔔' },
+  ]},
 ]
+
+const ACTIVE_COLOR = '#0f6b57'
+const ACTIVE_BG = 'rgba(15,107,87,0.1)'
 
 function Sidebar() {
   return (
-    <div className="px-3 py-2 space-y-4">
+    <div className="px-2 space-y-0">
       {MENU.map(({ section, items }, si) => (
         <div key={section}>
-          <p className="text-[10px] font-bold text-gray-400 tracking-widest uppercase px-2 mb-1.5">{section}</p>
+          <p className="text-[9px] font-black text-gray-400 tracking-[0.12em] uppercase px-3 pt-4 pb-1.5">{section}</p>
           <ul className="space-y-0.5">
-            {items.map((label, i) => {
+            {items.map(({ label, icon }, i) => {
               const active = si === 0 && i === 0
               return (
                 <li key={label}>
                   <button
-                    className="w-full text-left px-3 py-2 rounded-xl text-sm font-medium transition-all duration-150"
+                    className="w-full text-left px-3 py-1.5 rounded-xl text-sm font-medium transition-all duration-150 flex items-center gap-2.5"
                     style={active
-                      ? { background: 'linear-gradient(90deg, rgba(15,107,87,0.12), rgba(26,153,112,0.04))', color: '#0f6b57', borderLeft: '3px solid #0f6b57', paddingLeft: '9px' }
+                      ? { background: ACTIVE_BG, color: ACTIVE_COLOR }
                       : { color: '#6b7280' }
                     }
-                    onMouseEnter={(e) => { if (!active) { e.currentTarget.style.background = '#f3f4f6'; e.currentTarget.style.color = '#111827' } }}
+                    onMouseEnter={(e) => { if (!active) { e.currentTarget.style.background = '#f3f4f6'; e.currentTarget.style.color = '#374151' } }}
                     onMouseLeave={(e) => { if (!active) { e.currentTarget.style.background = ''; e.currentTarget.style.color = '#6b7280' } }}
                   >
-                    {label}
+                    <span className="w-5 text-center shrink-0 text-base leading-none" style={{ opacity: active ? 1 : 0.6 }}>{icon}</span>
+                    <span className="truncate flex-1">{label}</span>
+                    {active && <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: ACTIVE_COLOR }} />}
                   </button>
                 </li>
               )

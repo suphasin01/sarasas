@@ -8,42 +8,66 @@ import { t } from '../i18n'
 const roleInfo = ROLES.parent
 
 const MENU = [
-  { section: '🏠 ภาพรวม', items: ['หน้าหลัก', 'ข้อมูลบุตรหลาน', 'การแจ้งเตือน'] },
-  {
-    section: '📊 ผลการเรียน',
-    items: ['คะแนนและเกรด', 'การมาเรียน', 'คะแนนความประพฤติ', 'รายงานผลการเรียน'],
-  },
-  {
-    section: '💬 สื่อสาร',
-    items: ['ข้อความจากครู', 'ติดต่อครู', 'ประกาศโรงเรียน'],
-  },
-  { section: '📅 กิจกรรม', items: ['ปฏิทินกิจกรรม', 'นัดพบครู'] },
-  { section: '🚌 รถโรงเรียน', items: ['ติดตามรถสด', 'ประวัติการรับส่ง'] },
-  { section: '💳 การเงิน', items: ['ค่าธรรมเนียม', 'ประวัติชำระ'] },
-  { section: '👤 บัญชี', items: ['โปรไฟล์', 'ตั้งค่า'] },
+  { section: 'ภาพรวม', items: [
+    { label: 'หน้าหลัก', icon: '🏠' },
+    { label: 'ข้อมูลบุตรหลาน', icon: '👧' },
+    { label: 'การแจ้งเตือน', icon: '🔔' },
+  ]},
+  { section: 'ผลการเรียน', items: [
+    { label: 'คะแนนและเกรด', icon: '🏆' },
+    { label: 'การมาเรียน', icon: '✅' },
+    { label: 'คะแนนความประพฤติ', icon: '⭐' },
+    { label: 'รายงานผลการเรียน', icon: '📊' },
+  ]},
+  { section: 'สื่อสาร', items: [
+    { label: 'ข้อความจากครู', icon: '💬' },
+    { label: 'ติดต่อครู', icon: '📱' },
+    { label: 'ประกาศโรงเรียน', icon: '📢' },
+  ]},
+  { section: 'กิจกรรม', items: [
+    { label: 'ปฏิทินกิจกรรม', icon: '📅' },
+    { label: 'นัดพบครู', icon: '🤝' },
+  ]},
+  { section: 'รถโรงเรียน', items: [
+    { label: 'ติดตามรถสด', icon: '🚌' },
+    { label: 'ประวัติการรับส่ง', icon: '📍' },
+  ]},
+  { section: 'การเงิน', items: [
+    { label: 'ค่าธรรมเนียม', icon: '💳' },
+    { label: 'ประวัติชำระ', icon: '📋' },
+  ]},
+  { section: 'บัญชี', items: [
+    { label: 'โปรไฟล์', icon: '👤' },
+    { label: 'ตั้งค่า', icon: '⚙️' },
+  ]},
 ]
+
+const ACTIVE_COLOR = '#b86e10'
+const ACTIVE_BG = 'rgba(184,110,16,0.1)'
 
 function Sidebar() {
   return (
-    <div className="px-3 py-2 space-y-4">
+    <div className="px-2 space-y-0">
       {MENU.map(({ section, items }, si) => (
         <div key={section}>
-          <p className="text-[10px] font-bold text-gray-400 tracking-widest uppercase px-2 mb-1.5">{section}</p>
+          <p className="text-[9px] font-black text-gray-400 tracking-[0.12em] uppercase px-3 pt-4 pb-1.5">{section}</p>
           <ul className="space-y-0.5">
-            {items.map((label, i) => {
+            {items.map(({ label, icon }, i) => {
               const active = si === 0 && i === 0
               return (
                 <li key={label}>
                   <button
-                    className="w-full text-left px-3 py-2 rounded-xl text-sm font-medium transition-all duration-150"
+                    className="w-full text-left px-3 py-1.5 rounded-xl text-sm font-medium transition-all duration-150 flex items-center gap-2.5"
                     style={active
-                      ? { background: 'linear-gradient(90deg, rgba(184,110,16,0.12), rgba(217,149,42,0.04))', color: '#b86e10', borderLeft: '3px solid #b86e10', paddingLeft: '9px' }
+                      ? { background: ACTIVE_BG, color: ACTIVE_COLOR }
                       : { color: '#6b7280' }
                     }
-                    onMouseEnter={(e) => { if (!active) { e.currentTarget.style.background = '#f3f4f6'; e.currentTarget.style.color = '#111827' } }}
+                    onMouseEnter={(e) => { if (!active) { e.currentTarget.style.background = '#f3f4f6'; e.currentTarget.style.color = '#374151' } }}
                     onMouseLeave={(e) => { if (!active) { e.currentTarget.style.background = ''; e.currentTarget.style.color = '#6b7280' } }}
                   >
-                    {label}
+                    <span className="w-5 text-center shrink-0 text-base leading-none" style={{ opacity: active ? 1 : 0.6 }}>{icon}</span>
+                    <span className="truncate flex-1">{label}</span>
+                    {active && <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: ACTIVE_COLOR }} />}
                   </button>
                 </li>
               )

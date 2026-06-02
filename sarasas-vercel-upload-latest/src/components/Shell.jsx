@@ -149,7 +149,7 @@ export default function Shell({ roleInfo, onLogout, sidebar, children }) {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto py-3">
+          <div className="flex-1 overflow-y-auto py-0">
             {sidebar}
           </div>
 
