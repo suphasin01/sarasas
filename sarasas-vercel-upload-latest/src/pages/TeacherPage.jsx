@@ -1,5 +1,7 @@
 import Shell from '../components/Shell'
 import { ROLES, TEACHER_SCHEDULE, TEACHER_TASKS } from '../data'
+import { useLang } from '../context/LanguageContext'
+import { t } from '../i18n'
 
 const roleInfo = ROLES.teacher
 
@@ -68,23 +70,25 @@ function Sidebar() {
 
 const cs = '0 4px 24px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04)'
 
-const STATS = [
-  { label: 'นักเรียนทั้งหมด', value: '142', unit: 'คน', icon: '👥', from: '#0f6b57', to: '#1a9970', glow: 'rgba(15,107,87,0.22)' },
-  { label: 'คาบสอนวันนี้', value: '4', unit: 'คาบ', icon: '📚', from: '#2563eb', to: '#3b82f6', glow: 'rgba(37,99,235,0.22)' },
-  { label: 'งานรอตรวจ', value: '18', unit: 'ชิ้น', icon: '📋', from: '#d97706', to: '#f59e0b', glow: 'rgba(217,119,6,0.22)' },
-  { label: 'คะแนนเฉลี่ย', value: '3.4', unit: 'GPA', icon: '🏆', from: '#7c3aed', to: '#8b5cf6', glow: 'rgba(124,58,237,0.22)' },
-]
-
-const QUICK = [
-  { label: 'เช็กชื่อด่วน', icon: '✅', from: '#0f6b57', to: '#1a9970', glow: 'rgba(15,107,87,0.38)' },
-  { label: 'เพิ่มการบ้าน', icon: '📝', from: '#2563eb', to: '#3b82f6', glow: 'rgba(37,99,235,0.38)' },
-  { label: 'เพิ่มคะแนน', icon: '⭐', from: '#7c3aed', to: '#8b5cf6', glow: 'rgba(124,58,237,0.38)' },
-  { label: 'ส่งประกาศ', icon: '📢', from: '#d97706', to: '#f59e0b', glow: 'rgba(217,119,6,0.38)' },
-]
-
 const NOTIF_COLORS = { danger: '#dc2626', warning: '#d97706', primary: '#2563eb', secondary: '#7c3aed' }
 
 export default function TeacherPage({ onLogout }) {
+  const { lang } = useLang()
+
+  const STATS = [
+    { label: t('statStudents', lang), value: '142', unit: lang === 'th' ? 'คน' : 'students', icon: '👥', from: '#0f6b57', to: '#1a9970', glow: 'rgba(15,107,87,0.22)' },
+    { label: t('statPeriods', lang), value: '4', unit: lang === 'th' ? 'คาบ' : 'periods', icon: '📚', from: '#2563eb', to: '#3b82f6', glow: 'rgba(37,99,235,0.22)' },
+    { label: t('statPending', lang), value: '18', unit: lang === 'th' ? 'ชิ้น' : 'items', icon: '📋', from: '#d97706', to: '#f59e0b', glow: 'rgba(217,119,6,0.22)' },
+    { label: t('statAvgGPA', lang), value: '3.4', unit: 'GPA', icon: '🏆', from: '#7c3aed', to: '#8b5cf6', glow: 'rgba(124,58,237,0.22)' },
+  ]
+
+  const QUICK = [
+    { label: t('quickAttendance', lang), icon: '✅', from: '#0f6b57', to: '#1a9970', glow: 'rgba(15,107,87,0.38)' },
+    { label: t('quickHomework', lang), icon: '📝', from: '#2563eb', to: '#3b82f6', glow: 'rgba(37,99,235,0.38)' },
+    { label: t('quickScore', lang), icon: '⭐', from: '#7c3aed', to: '#8b5cf6', glow: 'rgba(124,58,237,0.38)' },
+    { label: t('quickAnnounce', lang), icon: '📢', from: '#d97706', to: '#f59e0b', glow: 'rgba(217,119,6,0.38)' },
+  ]
+
   return (
     <Shell roleInfo={roleInfo} onLogout={onLogout} sidebar={<Sidebar />}>
       <div className="space-y-4">
@@ -127,16 +131,16 @@ export default function TeacherPage({ onLogout }) {
                 style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.2)' }}>
                 🟢 Teacher Panel
               </div>
-              <h1 className="text-2xl font-black leading-tight">หน้าหลักสำหรับคุณครู</h1>
+              <h1 className="text-2xl font-black leading-tight">{t('teacherHeroTitle', lang)}</h1>
               <p className="mt-1.5 text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.8)' }}>
-                จัดตารางสอน เช็กชื่อ ตรวจงาน ส่งประกาศ และดูแจ้งเตือนสำคัญได้จากหน้าเดียว
+                {t('teacherHeroDesc', lang)}
               </p>
             </div>
             <div className="hidden sm:block text-right shrink-0 ml-6 p-4 rounded-2xl"
               style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.18)', backdropFilter: 'blur(8px)' }}>
-              <p className="text-xs font-medium" style={{ color: 'rgba(255,255,255,0.65)' }}>วันนี้</p>
-              <p className="font-black text-xl">13 พ.ค. 2026</p>
-              <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.7)' }}>มีสอน 4 คาบ / งานรอตรวจ 18 ชิ้น</p>
+              <p className="text-xs font-medium" style={{ color: 'rgba(255,255,255,0.65)' }}>{t('todayLabel', lang)}</p>
+              <p className="font-black text-xl">{t('dateStr', lang)}</p>
+              <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.7)' }}>{t('teacherInfoBox', lang)}</p>
             </div>
           </div>
         </div>
@@ -144,8 +148,8 @@ export default function TeacherPage({ onLogout }) {
         {/* Quick Actions */}
         <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
           <div className="px-6 pt-5 pb-0">
-            <h2 className="text-base font-bold text-gray-900">Quick Actions</h2>
-            <p className="text-xs text-gray-400 mt-0.5">ลดจำนวนคลิกสำหรับงานที่ใช้บ่อย</p>
+            <h2 className="text-base font-bold text-gray-900">{t('quickActions', lang)}</h2>
+            <p className="text-xs text-gray-400 mt-0.5">{t('quickActionsSub', lang)}</p>
           </div>
           <div className="h-px bg-gray-100 mx-6 mt-4" />
           <div className="p-5">
@@ -168,7 +172,7 @@ export default function TeacherPage({ onLogout }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
             <div className="px-6 pt-5 pb-0 flex items-center justify-between">
-              <h2 className="text-base font-bold text-gray-900">ตารางสอนวันนี้</h2>
+              <h2 className="text-base font-bold text-gray-900">{t('scheduleToday', lang)}</h2>
               <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: '#f0fdf4', color: '#166534' }}>4 คาบ</span>
             </div>
             <div className="h-px bg-gray-100 mx-6 mt-4" />
@@ -191,15 +195,15 @@ export default function TeacherPage({ onLogout }) {
 
           <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
             <div className="px-6 pt-5 pb-0">
-              <h2 className="text-base font-bold text-gray-900">Notification Center</h2>
+              <h2 className="text-base font-bold text-gray-900">{t('notifCenter', lang)}</h2>
             </div>
             <div className="h-px bg-gray-100 mx-6 mt-4" />
             <div className="p-5 space-y-3">
               {[
-                { title: 'นักเรียนขาดเรียน', desc: 'ป.6/1 ขาด 2 คนในคาบเช้า', color: 'danger', icon: '⚠️' },
-                { title: 'งานยังไม่ตรวจ', desc: 'แบบฝึกหัดบทที่ 4 เหลือ 18 ชิ้น', color: 'warning', icon: '📋' },
-                { title: 'ผู้ปกครองส่งข้อความ', desc: 'มีข้อความใหม่ 3 รายการ', color: 'primary', icon: '💬' },
-                { title: 'ใกล้วันสอบ', desc: 'สอบกลางภาคอีก 9 วัน', color: 'secondary', icon: '📅' },
+                { title: t('notifAbsent', lang), desc: t('notifAbsentDesc', lang), color: 'danger', icon: '⚠️' },
+                { title: t('notifUngraded', lang), desc: t('notifUngradedDesc', lang), color: 'warning', icon: '📋' },
+                { title: t('notifParentMsg', lang), desc: t('notifParentMsgDesc', lang), color: 'primary', icon: '💬' },
+                { title: t('notifExam', lang), desc: t('notifExamDesc', lang), color: 'secondary', icon: '📅' },
               ].map(({ title, desc, color, icon }) => (
                 <div
                   key={title}
@@ -222,9 +226,9 @@ export default function TeacherPage({ onLogout }) {
         {/* Tasks */}
         <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
           <div className="px-6 pt-5 pb-0 flex items-center justify-between">
-            <h2 className="text-base font-bold text-gray-900">งานและการประเมิน</h2>
+            <h2 className="text-base font-bold text-gray-900">{t('taskSection', lang)}</h2>
             <button className="text-xs font-bold px-3 py-1.5 rounded-lg" style={{ background: '#f0fdf4', color: '#0f6b57' }}>
-              ตรวจงาน →
+              {t('reviewTask', lang)}
             </button>
           </div>
           <div className="h-px bg-gray-100 mx-6 mt-4" />
@@ -257,7 +261,7 @@ export default function TeacherPage({ onLogout }) {
         {/* Weekly Schedule */}
         <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
           <div className="px-6 pt-5 pb-0">
-            <h2 className="text-base font-bold text-gray-900">จัดตารางสอนของฉัน</h2>
+            <h2 className="text-base font-bold text-gray-900">{t('weeklySchedule', lang)}</h2>
           </div>
           <div className="h-px bg-gray-100 mx-6 mt-4" />
           <div className="p-5">
@@ -291,9 +295,9 @@ export default function TeacherPage({ onLogout }) {
           className="bg-white rounded-2xl overflow-hidden"
           style={{ boxShadow: cs, borderTop: '3px solid #3b82f6' }}>
           <div className="px-6 pt-5 pb-0 flex items-center gap-2">
-            <h2 className="text-base font-bold text-gray-900">AI Features</h2>
+            <h2 className="text-base font-bold text-gray-900">{t('aiFeatures', lang)}</h2>
             <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: '#eff6ff', color: '#1e40af' }}>
-              ตัวช่วยสมัยใหม่
+              {t('aiSub', lang)}
             </span>
           </div>
           <div className="h-px bg-gray-100 mx-6 mt-4" />

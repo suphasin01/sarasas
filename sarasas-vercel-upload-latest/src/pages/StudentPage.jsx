@@ -1,6 +1,8 @@
 import { Progress } from '@heroui/react'
 import Shell from '../components/Shell'
 import { ROLES, STUDENT_SCHEDULE, GRADES, HOMEWORK } from '../data'
+import { useLang } from '../context/LanguageContext'
+import { t } from '../i18n'
 
 const roleInfo = ROLES.student
 
@@ -55,20 +57,6 @@ function Sidebar() {
 
 const cs = '0 4px 24px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04)'
 
-const STATS = [
-  { label: 'คาบเรียนวันนี้', value: '5', unit: 'คาบ', icon: '📖', from: '#2b70b8', to: '#3d8fd4', glow: 'rgba(43,112,184,0.22)' },
-  { label: 'GPA ปัจจุบัน', value: '3.7', unit: '', icon: '⭐', from: '#059669', to: '#10b981', glow: 'rgba(5,150,105,0.22)' },
-  { label: 'การบ้านค้างส่ง', value: '2', unit: 'ชิ้น', icon: '📝', from: '#dc2626', to: '#ef4444', glow: 'rgba(220,38,38,0.22)' },
-  { label: 'เวลาเรียน', value: '97', unit: '%', icon: '✅', from: '#7c3aed', to: '#8b5cf6', glow: 'rgba(124,58,237,0.22)' },
-]
-
-const QUICK = [
-  { label: 'ส่งการบ้าน', icon: '📤', from: '#2b70b8', to: '#3d8fd4', glow: 'rgba(43,112,184,0.38)' },
-  { label: 'ดูคะแนน', icon: '📊', from: '#059669', to: '#10b981', glow: 'rgba(5,150,105,0.38)' },
-  { label: 'แชทครู', icon: '💬', from: '#7c3aed', to: '#8b5cf6', glow: 'rgba(124,58,237,0.38)' },
-  { label: 'ดูตารางสอบ', icon: '📅', from: '#d97706', to: '#f59e0b', glow: 'rgba(217,119,6,0.38)' },
-]
-
 const GRADE_MAP = {
   A: { from: '#059669', to: '#10b981', bg: '#f0fdf4', text: '#166534' },
   B: { from: '#2563eb', to: '#3b82f6', bg: '#eff6ff', text: '#1e40af' },
@@ -91,6 +79,22 @@ function gradeColor(grade) {
 }
 
 export default function StudentPage({ onLogout }) {
+  const { lang } = useLang()
+
+  const STATS = [
+    { label: t('statPeriodsS', lang), value: '5', unit: lang === 'th' ? 'คาบ' : 'periods', icon: '📖', from: '#2b70b8', to: '#3d8fd4', glow: 'rgba(43,112,184,0.22)' },
+    { label: t('statGPAS', lang), value: '3.7', unit: '', icon: '⭐', from: '#059669', to: '#10b981', glow: 'rgba(5,150,105,0.22)' },
+    { label: t('statHWDue', lang), value: '2', unit: lang === 'th' ? 'ชิ้น' : 'items', icon: '📝', from: '#dc2626', to: '#ef4444', glow: 'rgba(220,38,38,0.22)' },
+    { label: t('statTimeS', lang), value: '97', unit: '%', icon: '✅', from: '#7c3aed', to: '#8b5cf6', glow: 'rgba(124,58,237,0.22)' },
+  ]
+
+  const QUICK = [
+    { label: t('quickSubmit', lang), icon: '📤', from: '#2b70b8', to: '#3d8fd4', glow: 'rgba(43,112,184,0.38)' },
+    { label: t('quickGrade', lang), icon: '📊', from: '#059669', to: '#10b981', glow: 'rgba(5,150,105,0.38)' },
+    { label: t('quickChat', lang), icon: '💬', from: '#7c3aed', to: '#8b5cf6', glow: 'rgba(124,58,237,0.38)' },
+    { label: t('quickExam', lang), icon: '📅', from: '#d97706', to: '#f59e0b', glow: 'rgba(217,119,6,0.38)' },
+  ]
+
   return (
     <Shell roleInfo={roleInfo} onLogout={onLogout} sidebar={<Sidebar />}>
       <div className="space-y-4">
@@ -133,16 +137,16 @@ export default function StudentPage({ onLogout }) {
                 style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.2)' }}>
                 🎒 Student Portal
               </div>
-              <h1 className="text-2xl font-black leading-tight">สวัสดี กานต์พิชชา 👋</h1>
+              <h1 className="text-2xl font-black leading-tight">{t('studentHeroTitle', lang)}</h1>
               <p className="mt-1.5 text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.8)' }}>
-                วันนี้มีเรียน 5 คาบ · การบ้านค้างส่ง 2 ชิ้น · คะแนนเฉลี่ย 3.7 GPA
+                {t('studentHeroDesc', lang)}
               </p>
             </div>
             <div className="hidden sm:block text-right shrink-0 ml-6 p-4 rounded-2xl"
               style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.18)', backdropFilter: 'blur(8px)' }}>
-              <p className="text-xs font-medium" style={{ color: 'rgba(255,255,255,0.65)' }}>วันนี้</p>
-              <p className="font-black text-xl">13 พ.ค. 2026</p>
-              <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.7)' }}>จันทร์ · ภาคเรียนที่ 1</p>
+              <p className="text-xs font-medium" style={{ color: 'rgba(255,255,255,0.65)' }}>{t('todayLabel', lang)}</p>
+              <p className="font-black text-xl">{t('dateStr', lang)}</p>
+              <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.7)' }}>{t('studentInfoBox', lang)}</p>
             </div>
           </div>
         </div>
@@ -150,8 +154,8 @@ export default function StudentPage({ onLogout }) {
         {/* Quick Actions */}
         <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
           <div className="px-6 pt-5 pb-0">
-            <h2 className="text-base font-bold text-gray-900">Quick Actions</h2>
-            <p className="text-xs text-gray-400 mt-0.5">ทำได้เลยในคลิกเดียว</p>
+            <h2 className="text-base font-bold text-gray-900">{t('quickActions', lang)}</h2>
+            <p className="text-xs text-gray-400 mt-0.5">{t('quickActionsSub', lang)}</p>
           </div>
           <div className="h-px bg-gray-100 mx-6 mt-4" />
           <div className="p-5">
@@ -174,7 +178,7 @@ export default function StudentPage({ onLogout }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
             <div className="px-6 pt-5 pb-0 flex items-center justify-between">
-              <h2 className="text-base font-bold text-gray-900">ตารางเรียนวันนี้</h2>
+              <h2 className="text-base font-bold text-gray-900">{t('todayClasses', lang)}</h2>
               <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: '#eff6ff', color: '#1e40af' }}>5 คาบ</span>
             </div>
             <div className="h-px bg-gray-100 mx-6 mt-4" />
@@ -197,7 +201,7 @@ export default function StudentPage({ onLogout }) {
 
           <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
             <div className="px-6 pt-5 pb-0">
-              <h2 className="text-base font-bold text-gray-900">การบ้านที่รอส่ง</h2>
+              <h2 className="text-base font-bold text-gray-900">{t('homeworkPending', lang)}</h2>
             </div>
             <div className="h-px bg-gray-100 mx-6 mt-4" />
             <div className="p-5 space-y-3">
@@ -232,9 +236,9 @@ export default function StudentPage({ onLogout }) {
         {/* Grades */}
         <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
           <div className="px-6 pt-5 pb-0 flex items-center justify-between">
-            <h2 className="text-base font-bold text-gray-900">ผลการเรียนล่าสุด</h2>
+            <h2 className="text-base font-bold text-gray-900">{t('latestGrades', lang)}</h2>
             <button className="text-xs font-bold px-3 py-1.5 rounded-lg" style={{ background: '#eff6ff', color: '#1e40af' }}>
-              ดูรายงานเต็ม →
+              {t('fullReport', lang)}
             </button>
           </div>
           <div className="h-px bg-gray-100 mx-6 mt-4" />
@@ -267,8 +271,8 @@ export default function StudentPage({ onLogout }) {
               </div>
               <div className="w-px h-12 bg-blue-200" />
               <div>
-                <p className="text-sm font-bold" style={{ color: '#1e40af' }}>ผลการเรียนดีเยี่ยม</p>
-                <p className="text-xs text-gray-400 mt-0.5">ภาคเรียนที่ 1 ปีการศึกษา 2569</p>
+                <p className="text-sm font-bold" style={{ color: '#1e40af' }}>{t('excellentResult', lang)}</p>
+                <p className="text-xs text-gray-400 mt-0.5">{t('semesterLabel', lang)}</p>
               </div>
             </div>
           </div>
@@ -277,7 +281,7 @@ export default function StudentPage({ onLogout }) {
         {/* Attendance */}
         <div className="bg-white rounded-2xl overflow-hidden" style={{ boxShadow: cs }}>
           <div className="px-6 pt-5 pb-0">
-            <h2 className="text-base font-bold text-gray-900">การมาเรียน</h2>
+            <h2 className="text-base font-bold text-gray-900">{t('attendanceSec', lang)}</h2>
           </div>
           <div className="h-px bg-gray-100 mx-6 mt-4" />
           <div className="p-5">

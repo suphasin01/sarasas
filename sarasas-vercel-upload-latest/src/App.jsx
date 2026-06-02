@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { LanguageProvider } from './context/LanguageContext'
 import LoginModal from './components/LoginModal'
 import PublicPage from './pages/PublicPage'
 import TeacherPage from './pages/TeacherPage'
@@ -20,7 +21,7 @@ export default function App() {
   }
 
   return (
-    <>
+    <LanguageProvider>
       {!role && <PublicPage onLoginClick={() => setLoginOpen(true)} />}
       {role === 'teacher' && <TeacherPage onLogout={handleLogout} />}
       {role === 'student' && <StudentPage onLogout={handleLogout} />}
@@ -30,6 +31,6 @@ export default function App() {
         onLogin={handleLogin}
         onClose={() => setLoginOpen(false)}
       />
-    </>
+    </LanguageProvider>
   )
 }

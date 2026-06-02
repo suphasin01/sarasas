@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useLang } from '../context/LanguageContext'
+import { t } from '../i18n'
 
 const ROLE_COLORS = {
   success: { from: '#0f6b57', to: '#1a9970', light: '#f0fdf4', text: '#166534', glow: 'rgba(15,107,87,0.28)' },
@@ -8,6 +10,7 @@ const ROLE_COLORS = {
 
 export default function Shell({ roleInfo, onLogout, sidebar, children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const { lang, toggle } = useLang()
   const c = ROLE_COLORS[roleInfo.color] ?? ROLE_COLORS.success
 
   return (
@@ -39,7 +42,7 @@ export default function Shell({ roleInfo, onLogout, sidebar, children }) {
                   boxShadow: `0 4px 16px ${c.glow}`,
                 }}>S</div>
               <div className="leading-tight hidden sm:block">
-                <p className="font-extrabold text-gray-900 text-sm">โรงเรียนสารสาสน์</p>
+                <p className="font-extrabold text-gray-900 text-sm">{t('schoolName', lang)}</p>
                 <p className="text-[10px] text-gray-400 tracking-widest font-semibold">BILINGUAL EDUCATION</p>
               </div>
             </div>
@@ -47,10 +50,26 @@ export default function Shell({ roleInfo, onLogout, sidebar, children }) {
 
           <div className="flex items-center gap-2.5">
             <div className="hidden lg:block text-right mr-1">
-              <p className="text-xs font-bold text-gray-700">13 พ.ค. 2026</p>
-              <p className="text-[10px] text-gray-400">จันทร์ · ภาคเรียนที่ 1</p>
+              <p className="text-xs font-bold text-gray-700">{t('dateStr', lang)}</p>
+              <p className="text-[10px] text-gray-400">{t('semester', lang)}</p>
             </div>
             <div className="hidden lg:block w-px h-8 bg-gray-200" />
+
+            {/* Language toggle */}
+            <button
+              onClick={toggle}
+              className="hidden sm:flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-black tracking-wider transition-all duration-150 hover:scale-105"
+              style={{
+                background: lang === 'th'
+                  ? `linear-gradient(135deg, ${c.from}, ${c.to})`
+                  : 'linear-gradient(135deg, #1e3a5f, #2b5a9e)',
+                color: 'white',
+                boxShadow: lang === 'th' ? `0 3px 10px ${c.glow}` : '0 3px 10px rgba(30,58,95,0.3)',
+                letterSpacing: '0.05em',
+              }}>
+              {lang === 'th' ? 'TH' : 'EN'}
+              <span style={{ opacity: 0.55, fontSize: '9px' }}>/ {lang === 'th' ? 'EN' : 'TH'}</span>
+            </button>
 
             <button
               className="relative w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-150 hover:scale-105"
@@ -161,7 +180,7 @@ export default function Shell({ roleInfo, onLogout, sidebar, children }) {
                   <line x1="21" y1="12" x2="9" y2="12" />
                 </svg>
               </div>
-              ออกจากระบบ
+              {t('logout', lang)}
             </button>
           </div>
         </aside>
