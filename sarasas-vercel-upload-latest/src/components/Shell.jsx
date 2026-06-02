@@ -102,7 +102,7 @@ export default function Shell({ roleInfo, onLogout, sidebar, children }) {
 
           {/* Profile header */}
           <div
-            className="shrink-0 p-5 relative overflow-hidden"
+            className="shrink-0 px-4 py-4 relative overflow-hidden"
             style={{ background: `linear-gradient(135deg, ${c.from} 0%, ${c.to} 100%)` }}>
             <div className="absolute -top-8 -right-8 w-28 h-28 rounded-full" style={{ background: 'rgba(255,255,255,0.09)' }} />
             <div className="absolute -bottom-6 -left-6 w-20 h-20 rounded-full" style={{ background: 'rgba(255,255,255,0.06)' }} />
@@ -171,7 +171,7 @@ export default function Shell({ roleInfo, onLogout, sidebar, children }) {
         )}
 
         <main className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden">
-          <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+          <div className="max-w-6xl mx-auto p-4 md:p-5">
             {children}
           </div>
         </main>

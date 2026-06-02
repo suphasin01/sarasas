@@ -93,7 +93,7 @@ function gradeColor(grade) {
 export default function StudentPage({ onLogout }) {
   return (
     <Shell roleInfo={roleInfo} onLogout={onLogout} sidebar={<Sidebar />}>
-      <div className="space-y-5">
+      <div className="space-y-4">
 
         {/* Stat cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

@@ -87,7 +87,7 @@ const NOTIF_COLORS = { danger: '#dc2626', warning: '#d97706', primary: '#2563eb'
 export default function TeacherPage({ onLogout }) {
   return (
     <Shell roleInfo={roleInfo} onLogout={onLogout} sidebar={<Sidebar />}>
-      <div className="space-y-5">
+      <div className="space-y-4">
 
         {/* Stat cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
