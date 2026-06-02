@@ -192,3 +192,41 @@ loginForm.addEventListener("submit", (event) => {
 setInterval(() => {
   showSlide((activeSlide + 1) % slides.length);
 }, 6500);
+
+// Bus tracker ETA countdown
+(function initBusTracker() {
+  const etaMinutesEls = document.querySelectorAll(".eta-minutes");
+  const etaClockEls = document.querySelectorAll(".eta-clock");
+  const etaArrivalEls = document.querySelectorAll(".eta-arrival");
+  const lastUpdateEls = document.querySelectorAll(".last-update");
+  if (!etaMinutesEls.length) return;
+
+  let remaining = 12;
+
+  function pad(n) {
+    return String(n).padStart(2, "0");
+  }
+
+  function tick() {
+    if (remaining > 0) remaining--;
+
+    const now = new Date();
+    const arrival = new Date(now.getTime() + remaining * 60000);
+    const arrivalStr = pad(arrival.getHours()) + ":" + pad(arrival.getMinutes());
+    const nowStr = pad(now.getHours()) + ":" + pad(now.getMinutes());
+
+    etaMinutesEls.forEach((el) => {
+      el.textContent = remaining > 0 ? remaining : "ถึงแล้ว!";
+    });
+    etaClockEls.forEach((el) => {
+      el.textContent = remaining > 0
+        ? "ประมาณ " + arrivalStr + " น."
+        : "รถถึงจุดรับของคุณแล้ว 🎉";
+    });
+    etaArrivalEls.forEach((el) => { el.textContent = arrivalStr; });
+    lastUpdateEls.forEach((el) => { el.textContent = "อัปเดต " + nowStr + " น."; });
+  }
+
+  tick();
+  setInterval(tick, 60000);
+}());

@@ -521,6 +521,11 @@
           <a href="#par-meeting">นัดพบครู</a>
         </section>
         <section>
+          <h2>🚌 รถโรงเรียน</h2>
+          <a href="#par-bus">ติดตามรถสด</a>
+          <a href="#par-bus-history">ประวัติการรับส่ง</a>
+        </section>
+        <section>
           <h2>💳 การเงิน</h2>
           <a href="#par-fees">ค่าธรรมเนียม</a>
           <a href="#par-payment">ประวัติชำระ</a>
@@ -622,6 +627,87 @@
           <div class="task-row"><span>ค่าเล่าเรียนภาค 1</span><span>28,000 ฿</span><strong class="grade-a">ชำระแล้ว</strong></div>
           <div class="task-row"><span>ค่ากิจกรรม</span><span>2,500 ฿</span><strong class="grade-c">ค้างชำระ</strong></div>
           <div class="task-row"><span>ค่าอาหาร (พ.ค.)</span><span>1,800 ฿</span><strong class="grade-a">ชำระแล้ว</strong></div>
+        </div>
+      </article>
+
+      <article id="par-bus" class="panel bus-tracker">
+        <div class="bus-tracker-header">
+          <div>
+            <div class="bus-tracker-title">
+              <span>ติดตามรถโรงเรียนสด</span>
+              <span class="live-badge">● LIVE</span>
+            </div>
+            <p class="bus-route-name">รถสาย 3 · ทะเบียน 40-1234 กท · คนขับ สมชาย ใจดี</p>
+          </div>
+          <span class="last-update">อัปเดต 07:09 น.</span>
+        </div>
+
+        <div class="eta-banner">
+          <div>
+            <p class="eta-stop">📍 จุดรับ: หน้าปากซอยสุขุมวิท 71</p>
+            <p class="eta-countdown">รถจะถึงใน <strong><span class="eta-minutes">12</span> นาที</strong></p>
+            <p class="eta-clock">ประมาณ 07:22 น.</p>
+          </div>
+          <span class="eta-bus-icon">🚌</span>
+        </div>
+
+        <div class="route-viz" aria-label="เส้นทางรถ">
+          <div class="route-track"><div class="route-fill" style="width:40%"></div></div>
+          <div class="route-stops-row">
+            <div class="rstop done"><div class="rstop-dot"></div><span>โรงเรียน</span></div>
+            <div class="rstop done"><div class="rstop-dot"></div><span>บางนา</span></div>
+            <div class="rstop current"><span class="rstop-bus">🚌</span><div class="rstop-dot"></div><span>ศรีนครินทร์</span></div>
+            <div class="rstop mine"><div class="rstop-dot"></div><span>สุขุมวิท 71 ⭐</span></div>
+            <div class="rstop"><div class="rstop-dot"></div><span>อ่อนนุช</span></div>
+            <div class="rstop"><div class="rstop-dot"></div><span>ปลายทาง</span></div>
+          </div>
+        </div>
+
+        <div class="stop-timeline">
+          <div class="stop-row done">
+            <div class="stop-marker"></div>
+            <div class="stop-detail"><strong>โรงเรียนสารสาสน์ (ออกเดินทาง)</strong><span>ออก 06:40 น.</span></div>
+            <span class="stop-tag passed">ผ่านแล้ว</span>
+          </div>
+          <div class="stop-row done">
+            <div class="stop-marker"></div>
+            <div class="stop-detail"><strong>สี่แยกบางนา</strong><span>06:55 น.</span></div>
+            <span class="stop-tag passed">ผ่านแล้ว</span>
+          </div>
+          <div class="stop-row active">
+            <div class="stop-marker"></div>
+            <div class="stop-detail"><strong>ศรีนครินทร์ ซอย 5</strong><span>07:10 น. · กำลังเข้าใกล้</span></div>
+            <span class="stop-tag current-tag">🚌 ใกล้แล้ว</span>
+          </div>
+          <div class="stop-row mine">
+            <div class="stop-marker"></div>
+            <div class="stop-detail">
+              <strong>หน้าปากซอยสุขุมวิท 71</strong>
+              <span class="my-stop-label">⭐ จุดรับของคุณ</span>
+              <span>ประมาณ <span class="eta-arrival">07:22</span> น.</span>
+            </div>
+            <span class="stop-tag eta-tag">อีก <span class="eta-minutes">12</span> นาที</span>
+          </div>
+          <div class="stop-row upcoming">
+            <div class="stop-marker"></div>
+            <div class="stop-detail"><strong>อ่อนนุช ซอย 10</strong><span>ประมาณ 07:35 น.</span></div>
+            <span class="stop-tag waiting">รอ</span>
+          </div>
+          <div class="stop-row upcoming">
+            <div class="stop-marker"></div>
+            <div class="stop-detail"><strong>สุขุมวิท 77 (ปลายทาง)</strong><span>ประมาณ 07:45 น.</span></div>
+            <span class="stop-tag waiting">รอ</span>
+          </div>
+        </div>
+
+        <div class="driver-info">
+          <div class="driver-face">ส</div>
+          <div class="driver-detail">
+            <strong>สมชาย ใจดี</strong>
+            <span>คนขับ · 02-000-1111</span>
+          </div>
+          <button type="button" class="driver-call">📞 โทรหาคนขับ</button>
+          <button type="button" class="driver-report">⚠️ แจ้งปัญหา</button>
         </div>
       </article>
     </section>
